@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en" class="wide wow-animation">
 <head>
     <!--Project Title-->
     <meta charset="UTF-8">
     <!--*********************** EDIT BELOW **********************************-->
-    <title>Japanese Character Recognition</title>
+    <title>OCR</title>
     <!--*********************** EDIT ABOVE **********************************-->
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport"
@@ -75,14 +74,11 @@
                         <li><a href="#">Table of Contents</a>
                             <ul class="rd-navbar-dropdown">
                                 <!--*********************** EDIT BELOW **********************************-->
-                                <li><a href="introduction.html">Problem Statement</a></li>
-                                <li><a href="chapter 1.html">Current Solutions</a></li>
-                                <li><a href="chapter 2.html">Analysis</a></li>
-                                <li><a href="chapter 3.html">Experiment 1</a></li>
-                                <li><a href="chapter 4.html">Experiment 2</a></li>
-                                <li><a href="conclusion.html">Conclusion</a></li>
+                                <li><a href="index.html#Abstract">Abstract</a></li>
+                                <li><a href="paper.html#Paper">Final Thesis</a></li>
+                                <li><a href="conclusion.html#Conclusion">Conclusion</a></li>
+                                <li><a href="future work.html#Future Work">Future Work</a></li>
                                 <li><a href="bibliography.html">Bibliography</a></li>
-                                <li><a href="paper.html">Paper</a></li>
                                 <!--*********************** EDIT ABOVE **********************************-->
                             </ul>
                         </li>
@@ -104,10 +100,12 @@
                 <div data-speed="0.78" data-type="html" data-fade="true"
                      class="well-parallax jumbotron text-center rd-parallax-layer">
                     <!--*********************** EDIT BELOW **********************************-->
-                    <h1 class="text-white">Japanese Character Recognition</h1>
-                    <h3 class="text-white">Undergraduate Project</h3>
-                    <h3 class="text-white">Jamshid Furughi</h3>
-                    <h3 class="text-white">2018</h3>
+                    <h1 class="text-white">Applying Optical Character Recognition (OCR) for Recognizing Texts Written in a Specific Persian Font</h1>
+                    <h4 class="text-white">A thesis submitted to BIHE for the degree of B.S. in the faculty of Computer Engineering</h4>
+                    <h5 class="text-white">Submitted by: Vargha Dadvar</h5>
+                    <h5 class="text-white">Advisor by: Vargha Dadvar</h5>
+                    <h5 class="text-white">Submission Date: July 2013 </h5>
+                    <h5 class="text-white">Project Advisor: Fares Hedayati</h5>
                     <!--*********************** EDIT ABOVE **********************************-->
                 </div>
             </div>
@@ -119,35 +117,26 @@
 
 <!--*********************** EDIT BELOW **********************************-->
 <!--Start section-->
-<a name="Reflections"></a>
-<section class="text-left bg-lighter well well-sm">
+<a name="Abstract"></a>
+<section class="text-left well well-sm">
     <div class="container">
-        <h3>Reflections</h3>
-        <p>I would like to thank  ..... for all the help and support they gave me ......</p>
-        <p>Lorem ipsum dolor sit amet, vel debet salutatus eu,
-            ex eum tota falli, cu pericula deseruisse ius. At vix integre fabellas. Est et probatus repudiare, at simul
-            senserit ullamcorper cum. In labores meliore sed, per an paulo simul corpora, pro clita epicuri moderatius
-            ei.
-            Vidisse voluptua signiferumque in sit, omnis phaedrum efficiendi cu vel. Modo fierent tractatos vim at.</p>
-        <p> Vidit laudem facilisi mea no. Ex mel propriae iracundia maiestatis, ad assum quaeque his. Dico suscipit
-            senserit
-            per id, ne pri percipit electram prodesset. Putent minimum temporibus ad eos, eos assum sonet fabellas ea,
-            omnis
-            soleat similique in vis. Et eam agam labores, graeci nostro gloriatur nec ea, illud malorum fastidii vis
-            ex.</p>
-        <p>Et sit eros utamur adipisci, eu nominavi intellegebat duo, scripta luptatum pertinax sit an. Pri ut amet
-            everti, equidem persecuti definitionem cu pro. An pertinax repudiare reprehendunt ius. In malorum admodum
-            est.</p>
-        <p>An sit commune voluptaria, option aeterno nominati ne his, at pri vivendum tincidunt definitionem. Ei nec
-            tempor
-            verterem instructior, eros utroque ad mea, habemus vulputate pri an. Utroque postulant mea ex, vix errem
-            tollit
-            graeco no, usu id prompta blandit. Omnis expetenda gubergren an est, et vel dicit consulatu adipiscing. Mel
-            eu
-            dictas mandamus eloquentiam, ne pri semper deserunt tractatos. An enim feugait quo.</p>
-        <p>Te vis oporteat prodesset. Sit dico accusam percipitur ad, choro nostro civibus quo no. Sit recusabo
-            ocurreret
-            in. Ad nam assum errem partem. Zril perfecto urbanitas ne eos, eum ea quas oblique.</p>
+        <h3>Abstract</h3>
+        <p>Recognition of the text in scanned documents of older Persian writings is a challenging task, because of the
+            properties of such scripts and the cursive property of Persian writings in general. As separate segmentation
+            of Persian characters is much more difficult than in Latin and some other alphabets, using segmentation-free
+            approaches are more useful in Persian OCR. In this project, one of such methods called the Generalized
+            Hidden Markov Models (or gHMM) is used for the recognition of texts written in a specific Persian font,
+            which was mostly used in older Persian documents and books. The gHMM not only helps to combine text line
+            segmentation and character recognition processes, but also provides a way to take advantage of both the
+            character image properties and the language model in the service of character recognition. The language
+            model probabilities and the parameters computed from the training character features are used in the
+            recognition process, and should be prepared during the training phase. The main recognition program
+            implemented in this project firstly detects and corrects the skew of the input pages and detects the text
+            lines. Then in the body of the recognition process, a generalized version of the Viterbi algorithm is used
+            to recognize simultaneously the best segmentation and the best character sequence corresponding to each text
+            line. The Modified Quadratic Distance Function (or MQDF) is used in the heart of the Viterbi algorithm in
+            order to measure the closeness of each character image with each of the character classes. The recognition
+            accuracy of the implemented OCR program is 85.5%.</p>
     </div>
 </section>
 <!--End section-->
@@ -162,7 +151,6 @@
 <script src="js/script.js"></script>
 
 </body>
-
 
 
 </html>

@@ -24,35 +24,58 @@
 
 <body>
 <!--*********************** EDIT BELOW **********************************-->
+<a name="Conclusion"></a>
 <!--Start section-->
-<section class="text-center bg-lighter well well-sm">
+<section class="text-md-left well well-sm">
     <div class="container">
-    <h3>Conclusion</h3>
-        <p>An unsolved problem in Japanese character recognition is .....</p>
-        <p>Lorem ipsum dolor sit amet, vel debet salutatus eu,
-            ex eum tota falli, cu pericula deseruisse ius. At vix integre fabellas. Est et probatus repudiare, at simul
-            senserit ullamcorper cum. In labores meliore sed, per an paulo simul corpora, pro clita epicuri moderatius
-            ei.
-            Vidisse voluptua signiferumque in sit, omnis phaedrum efficiendi cu vel. Modo fierent tractatos vim at.</p>
-        <p> Vidit laudem facilisi mea no. Ex mel propriae iracundia maiestatis, ad assum quaeque his. Dico suscipit
-            senserit
-            per id, ne pri percipit electram prodesset. Putent minimum temporibus ad eos, eos assum sonet fabellas ea,
-            omnis
-            soleat similique in vis. Et eam agam labores, graeci nostro gloriatur nec ea, illud malorum fastidii vis
-            ex.</p>
-        <p>Et sit eros utamur adipisci, eu nominavi intellegebat duo, scripta luptatum pertinax sit an. Pri ut amet
-            everti, equidem persecuti definitionem cu pro. An pertinax repudiare reprehendunt ius. In malorum admodum
-            est.</p>
-        <p>An sit commune voluptaria, option aeterno nominati ne his, at pri vivendum tincidunt definitionem. Ei nec
-            tempor
-            verterem instructior, eros utroque ad mea, habemus vulputate pri an. Utroque postulant mea ex, vix errem
-            tollit
-            graeco no, usu id prompta blandit. Omnis expetenda gubergren an est, et vel dicit consulatu adipiscing. Mel
-            eu
-            dictas mandamus eloquentiam, ne pri semper deserunt tractatos. An enim feugait quo.</p>
-        <p>Te vis oporteat prodesset. Sit dico accusam percipitur ad, choro nostro civibus quo no. Sit recusabo
-            ocurreret
-            in. Ad nam assum errem partem. Zril perfecto urbanitas ne eos, eum ea quas oblique.</p>
+        <h3><a href="index.html">Conclusion</a></h3>
+        <p>In this project, we implemented an OCR software program which is capable of recognizing the text in the
+            scanned images of the documents written in a specific older Persian font. Hidden Markov Models (HMM) was
+            used as the mathematical tool for modeling the character recognition problem, mainly
+            because HMM helps to take advantage of both the language model and the emission distances in service of the
+            recognition of characters. Also because Persian writings are cursive and thus the segmentation of text lines
+            into characters is a complicated problem, we preferred to perform the character segmentation and the
+            character recognition processes simultaneously. This combination of segmentation and recognition becomes
+            possible by using the generalized Hidden Markov Models (gHMM).</p>
+
+        <p>Language model probabilities and emission probabilities are the most important parameters used by gHMM for
+            recognizing the best segmentation of characters and the best character sequence corresponding to a text line
+            image. Therefore, these parameters should be prepared in the training process, before the OCR program can
+            run. Language model probabilities, including transition and initial probabilities are trained using the
+            appropriately type-written text version of the training document. For preparing the parameters used for
+            computing emission probabilities, firstly the training character images of all the character classes are
+            extracted from the scanned pages of the training document. This extraction of training character images is
+            done by marking the boundaries of characters in line images and then running a simple program to extract and
+            label each character image. After that, the emission parameters of all the character classes are computed
+            and saved by extracting and aggregating the features of the training character images. The features used in
+            this project for representing character images are mostly statistical features, which give information about
+            the way black pixels are distributed in different regions of each character image.</p>
+
+        <p>The input to the recognition process is the scanned images of the pages. Therefore, before starting the main
+            recognition process, some preprocessing is done by the program on the page images. The skew of the pages are
+            detected and corrected by testing some criteria on different rotations of each page and finding the best
+            angle. Then, the bounding boxes of the text lines in each page are detected by comparing all the possible
+            horizontal strips in the page with a trained pattern of text lines. These comparisons are done by using the
+            horizontal projections of the text line boxes. The final step in the preprocessing stage is the elimination
+            of white spaces from within and right and left sides of each line image.</p>
+
+        <p>In the main character recognition process, the generalized version of the Viterbi algorithm is used to
+            iterate over all possible segmentations and all possible character sequences for each segmentation in order
+            to find the best characters for the line image. For the comparisons of different character sequences in the
+            Viterbi algorithm, a joint probability (or a total distance) formula based on the HMM is used, which
+            combines the emission and the language model probabilities. For computing emission probabilities (or
+            emission distances), a distance function called MQDF is used, which uses the mean vector and the eigenvalues
+            and eigenvectors matrices of a character class in order to compute the closeness of a character image to the
+            class.</p>
+
+        <p>After doing a training phase by using 25 training pages, a series of cross-validation tests were done in
+            order to find the best values for the important variables and parameters of the program. The best result
+            achieved in the final tests of the program was 85.5% accuracy in recognizing the true characters.
+            Modifications in the program like using the length probabilities in the Viterbi total distance formula,
+            scaling down the values of the emission distances, and using average distances in comparisons, all helped to
+            improve the accuracy of the implemented OCR program. Also factors such as using a larger body of training
+            data and reducing the size of the block lengths in the Viterbi algorithm are effective on improving the
+            results of the program.</p>
     </div>
 </section>
 <!--End section-->
