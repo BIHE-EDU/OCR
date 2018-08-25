@@ -18,6 +18,9 @@
     <!--Bootstrap-->
 
     <link rel="stylesheet" href="css/style.css">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML'
+            async></script>
+
 
     <!--[if lt IE 10]>
         <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;"><a href="http://windows.microsoft.com/en-US/internet-explorer/.."><img src="images/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."></a></div>
@@ -73,19 +76,67 @@
 
                         <li><a href="#">Table of Contents</a>
                             <ul class="rd-navbar-dropdown">
+
                                 <!--*********************** EDIT BELOW **********************************-->
                                 <li><a href="#Abstract">Abstract</a></li>
                                 <li><a href="#1. Introduction">1. Introductions</a></li>
-                                <li><a href="#2. Some Background on Optical Character Recognition">2. Some Background on Optical Character Recognitionn</a></li>
-                                <li><a href="#3. About the Persian Writings and the Target Font Used">3. About the Persian Writings and the Target Font Used</a></li>
-                                <li><a href="#3.1. Properties of Persian Scripts">3.1. Properties of Persian Scripts</a></li>
-                                <li><a href="#3.2. Properties of the Target Font and Text">3.2. Properties of the Target Font and Text</a></li>
-                                <li><a href="#3.3. Selection of Character Classes Covered by OCR System">3.3. Selection of Character Classes Covered by OCR System</a></li>
-                                <li><a href="#4. The Main Recognition Approach">4. The Main Recognition Approach</a></li>
-                                <li><a href="#5. Preprocessing on the Scanned Documents">5. Preprocessing on the Scanned Documentsk</a></li>
-                                <li><a href="#5.1. Noise Removal">5.1. Noise Removal</a></li>
+                                <li><a href="#2. Some Background on Optical Character Recognition">2. Some Background on
+                                    Optical Character Recognitionn</a></li>
+                                <li class="dropdown men active "><a
+                                        href="#3. About the Persian Writings and the Target Font Used"
+                                        class="dropdown-toggle" data-toggle="dropdown">3. About the Persian Writings and
+                                    the Target Font Used<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#3.1. Properties of Persian Scripts">3.1. Properties of Persian
+                                            Scripts</a>
+                                        </li>
+                                        <li><a href="#3.2. Properties of the Target Font and Text">3.2. Properties of
+                                            the Target
+                                            Font and Text</a></li>
+                                        <li><a href="#3.3. Selection of Character Classes Covered by OCR System">3.3.
+                                            Selection
+                                            of Character Classes Covered by OCR System</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#4. The Main Recognition Approach">4. The Main Recognition Approach</a>
+                                </li>
+                                <li class="dropdown men active "><a href="#5. Preprocessing on the Scanned Documents"
+                                                                    class="dropdown-toggle" data-toggle="dropdown">5.
+                                    Preprocessing on the Scanned Documents<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#5.1. Noise Removal">5.1. Noise Removal</a></li>
+                                        <li><a href="#5.2. Skew Detection">5.2. Skew Detection</a></li>
+                                        <li><a href="#5.3. Baseline Detection">5.3. Baseline Detection</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#6. Features Extraction">6. Features Extraction</a></li>
+                                <li class="dropdown men active "><a href="#7. Training Process" class="dropdown-toggle"
+                                                                    data-toggle="dropdown">7. Training Process<b
+                                        class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#7.1. Preparing the Training Character Images">7.1. Preparing the
+                                            Training Character Images</a></li>
+                                        <li><a href="#7.2. Computing Fundamental Parameters of Emission Probabilities">7.2.
+                                            Computing Fundamental Parameters of Emission Probabilities</a></li>
+                                        <li><a href="#7.3. Computing Language Model Probabilities">7.3. Computing
+                                            Language Model Probabilities</a></li>
+                                        <li class="dropdown men active "><a
+                                                href="#7.3. Computing Language Model Probabilities"
+                                                class="dropdown-toggle" data-toggle="dropdown">7.3. Computing Language
+                                            Model Probabilities<b class="caret"></b></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#7.3.1. Transition Probabilities">7.3.1. Transition
+                                                    Probabilities</a></li>
+                                                <li><a href="#7.3.1. Transition Probabilities">7.3.1. Transition
+                                                    Probabilities</a></li>
+                                                <li><a href="#7.3.1. Transition Probabilities">7.3.1. Transition
+                                                    Probabilities</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
                                 <li><a href="bibliography.html">Bibliography</a></li>
-                                <li><a href="paper.html">See as a PDF file</a></li>
+                                <li><a href="paper.html">Thesis in PDF</a></li>
 
                                 <!--*********************** EDIT ABOVE **********************************-->
                             </ul>
@@ -113,7 +164,6 @@
                     <h4 class="text-white">A thesis submitted to BIHE for the degree of B.S. in the faculty of Computer
                         Engineering</h4>
                     <h5 class="text-white">Submitted by: Vargha Dadvar</h5>
-                    <h5 class="text-white">Advisor by: Vargha Dadvar</h5>
                     <h5 class="text-white">Submission Date: July 2013 </h5>
                     <h5 class="text-white">Project Advisor: Fares Hedayati</h5>
                     <!--*********************** EDIT ABOVE **********************************-->
@@ -511,6 +561,329 @@
             sometimes called salt-and-pepper noises. In the target text used in this project, the presence of
             salt-and-pepper noises is very little. Most of the noises in this text are located around or on the body of
             the characters, as some of them are shown in Figure 5 below.</p>
+        <figure class="figure">
+            <img src="img/Noise.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="40%" height="40%"
+                 alt="Some examples of noises in the scanned document.">
+            <figcaption class="figure-caption text-center">Figure 5 - Some examples of noises in the scanned document
+                used in this project
+            </figcaption>
+        </figure>
+        <p>Removing these types of noises is not easy, mostly because removing them needs some intelligence about the
+            form
+            and structure of characters. In most of OCR software, some types of statistical filters are applied to
+            document
+            images for noise removal. These filters replace the gray-scale value of each pixel with a weighted average
+            of
+            the values of the neighbor pixels. Some examples are Gaussian Filter and Median Filter. Unfortunately, our
+            tests
+            showed that removing noise based on the neighbor pixels is not useful enough for the target text used in
+            this
+            project. Most of these filters smooth the bodies of characters in practice, and sometimes this leads to the
+            removal of the little space between adjacent characters, or the space between the main character body and
+            its
+            dots and diacritics. As a result of these tests, it was decided not to use any explicit method for noise
+            removal.</p>
+    </div>
+</section>
+<!--End section-->
+
+!--Start section-->
+<a name="5.2. Skew Detection"></a>
+<section class="text-left well well-sm">
+    <div class="container">
+        <h3>5.2. Skew Detection</h3>
+        <p class="lead para">In order to detect and correct the skew of the pages, some measure is needed so that it can
+            be decided whether the page has skew, and if yes, how many degrees. One clue which is widely used for skew
+            detection is the fact that in most writings, the deskewed state of the pages has the most number of
+            horizontal white lines. Therefore, rotating the input image of the page in different angles and counting the
+            number of horizontal pixel lines with a high percentage of white pixels for each angle can be the skew
+            detection method.</p>
+        <p class="lead para">However, in some writings the mentioned trick may not be enough for skew detection. In this
+            project, the product of number of white lines and one other measured parameter is used for this purpose.
+            This second parameter is the average of the distance between the horizontal projections of the bounding
+            boxes of the detected lines and the horizontal projections of the training line bounding box. This measure
+            is computed during the baseline detection stage, and therefore in our implementation the skew detection and
+            the baseline detection processes are executed together at once. This second parameter can be understood
+            better by reading the next subsection about baseline detection.</p>
+        <p class="lead para">In summary, for skew detection firstly the code iterates over different possible skew
+            angles, for example angles between -5.0 and 5.0 degrees, with an increment of 0.5 or 0.25. For each angle,
+            the page image is rotated by the angle, and then the two mentioned parameters are calculated for the rotated
+            page. After analyzing all the possible skew angles, one with the highest product of two parameters is
+            selected as the skew angle. The page image rotated by the result angle is used in the next stages of the OCR
+            process.</p>
+    </div>
+</section>
+<!--End section-->
+
+!--Start section-->
+<a name="5.3. Baseline Detection"></a>
+<section class="text-left well well-sm">
+    <div class="container">
+        <h3>5.3. Baseline Detection</h3>
+        <p class="lead para">Baseline Detection (or Text Line Detection) is the process of detecting the baselines or
+            the bounding boxes of the text lines in the image of a document page. The extracted text line images are
+            used as input to the next stages of the OCR process. The most common method used for baseline detection is
+            using the concept of horizontal projections (or horizontal histograms), which means the number or percentage
+            of black pixels in each horizontal pixel line. It is obvious that horizontal projections of the text lines
+            in a document have higher values than those of the white space between the text lines, and this observation
+            can be useful for baseline detection.</p>
+        <p class="lead para">In our approach to baseline detection, firstly we need a typical pattern of the horizontal
+            projections of the text lines of the document used in the project. This can be reached by computing the
+            average (or more complex statistical measures) of the set of horizontal histograms of some
+            manually-extracted text line images. As a result, we have a trained ordered vector of horizontal projections
+            that can be compared with different parts of a page image in order to find the text lines. In each page, a
+            bounding box (whose width is the same as page width, and its height is the same as the height of typical
+            lines of this text) is slid down gradually from top of the page through the bottom. For each part of the
+            page, the horizontal projections of the rows are computed and then a distance function is used to compare
+            this set with the trained set of horizontal projections. Those parts of the page with the minimum distance
+            from the trained set are those which are the best candidates to be the text lines of the page. These
+            candidate parts almost always have better distances than their neighbor segments of the page, and thus
+            finding the local minima among the distance values leads to detecting the text lines. Figure 6 illustrates
+            the effect of executing skew detection and baseline detection programs on part of a page image.</p>
+        <figure class="figure">
+            <img src="img/Baseline.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="40%" height="40%"
+                 alt="Some examples of noises in the scanned document.">
+            <figcaption class="figure-caption text-center">Figure 6 - The main preprocessings performed on one part of
+                the image of a page
+            </figcaption>
+        </figure>
+        <p class="lead para">Testing this method on more than 50 pages of the target document, more than 97% of the text
+            lines are detected correctly. Some very short text lines (those including a few characters or at
+            most one or two words) are not detected correctly. This is because sometimes histogram pattern of very short
+            lines does not conform well to the histogram pattern of the training text lines. For example if the phrase
+            “عع ” (which is very common in our target text) is the only word in a text line, it is highly probable that
+            it is not detected by our baseline detector, because more black pixels are present in the upper part of this
+            phrase than in the center rows. Another inefficiency of this method is that in the current implementation,
+            the height of the text lines is regarded a fixed value, which is the height of the sliding bounding box. If
+            a text includes lines with different or unknown font sizes, the current method may fail in detecting the
+            text lines correctly. However, because all the pages of the document used in this project have been written
+            with a single font size, we decided not to support multiple font sizes in the current implementation. Using
+            a variation of the current method or applying the thresholding method used by [6] for baseline detection can
+            solve this problem.</p>
+        <p class="lead para">Finally, adequately large white spaces within and around (left and right of) the line
+            images are removed, because pure line images with the least quantity of white spaces are needed for the next
+            phases. Figure 7 shows a text line before and after the elimination of white spaces:</p>
+        <figure class="figure">
+            <img src="img/before_after.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="40%" height="40%"
+                 alt="Before and after the elimination of extra white spaces.">
+            <figcaption class="figure-caption text-center">Figure 7 - A line image before and after the elimination of
+                extra white spaces
+            </figcaption>
+        </figure>
+    </div>
+</section>
+<!--End section-->
+
+!--Start section-->
+<a name="6. Features Extraction"></a>
+<section class="text-left well well-sm">
+    <div class="container">
+        <h3>6. Features Extraction</h3>
+        <p class="lead para">As mentioned in previous sections, emission probability is computed by measuring the
+            similarity between a new character image and a character class. In order to perform this computation, the
+            most important features of the character image should be extracted and then these features are compared with
+            the important features extracted from the training character images of the character class. Therefore,
+            features extraction is an essential stage both in the training phase and in the final text recognition
+            process. The set of values of the features extracted from each character image is called the feature vector.
+            In this section, some details of
+            the features extraction process are explained, as well as the types of features used to represent character
+            images in this project.</p>
+        <p class="lead para">A good type of feature is one that can help to distinguish better between different
+            characters, and to determine better the similarities of images of the same character class. Usually two
+            different types of features are used in OCR projects: structural features and statistical features.
+            Structural features are those features which are related to the structure and form of the characters and
+            their main body and strokes. For example, features about the connected components of a character, or number
+            of branches or dots or crosses in the body of the character are among the structural features. On the other
+            hand, statistical features are computed by gathering different statistical information from the image of the
+            character, rather than the structure or form of the character body itself. Examples are the centroid (i.e.
+            center of mass) of black pixels in a character image, or the density of black pixels in different regions of
+            the image. Structural features are regarded better in differentiating similar characters, which are numerous
+            in Persian alphabet [7] [8]. However, extracting such features correctly in the images is sometimes a
+            complex problem. For instance, in the target document of this project, the bodies of characters are mostly
+            noisy, and thus structural features such as branches or crosses or loops may not be extracted correctly.
+            Moreover, sometimes the dots or inherent diacritics of characters are connected to the main body because of
+            noise, and this can prevent successful extraction of features related to dots or other components of
+            characters.</p>
+        <p class="lead para">Because of these complexities, we decided to use mostly the statistical features in the
+            current version of the OCR program. One good semi-structural type of feature is used as well, which is
+            called centroid-to-boundary distance [6]. Computing statistical features for smaller regions in the
+            character image (in addition to the whole image) is a good practice, because it can better reveal the
+            differences in details of the character images. In our project, each character image is resized to a fixed
+            size before extracting the features, so that the features values of the character images with different
+            sizes are measured based on the same frame and thus can be compared with each other correctly. Also, each
+            character image is binarized before features extraction, meaning that the gray-scale values of the pixels
+            are converted to either white or black, based on a binarization threshold.</p>
+        <p class="lead para">A summary of the main types of features used in this project is given here:</p>
+        <ul class="fa-ul">
+            <li><i class="fa-li fa fa-circle"></i>
+                <p class="lead para">Centroid (or Center of Mass): means the location (x and y) of the
+                    center of mass of the black pixels in a
+                    character image, or in one of its regions.</p>
+            <li><i class="fa-li fa fa-circle"></i>
+                <p class="lead para">Number or percentage of black pixels: that is, the percentage of black pixels in
+                    different regions of
+                    the
+                    image.</p>
+            </li>
+            <li><i class="fa-li fa fa-circle"></i>
+                <p class="lead para">Number of rows and columns with black pixels: means number or
+                    percentage of rows and columns in the image
+                    or its regions that contain at least one black pixel.</p>
+            </li>
+            <li><i class="fa-li fa fa-circle"></i>
+                <p class="lead para">Location of extremum black pixels: is the location (x or y or both of
+                    them) of the rightmost, leftmost,
+                    uppermost and lowermost black pixel in the character image or one of the smaller regions of the
+                    image.
+                    Usually the x-coordinate of the rightmost and leftmost black pixels, and the y-coordinate of the
+                    uppermost
+                    and lowermost black pixels are the most important values in this type of feature.</p>
+            </li>
+            <li><i class="fa-li fa fa-circle"></i>
+                <p class="lead para">Centroid-to-boundary distance: means the distance of the character
+                    centroid point from the outer border of
+                    the character body, in different angles (e.g. from 0 to 360 degrees, with an increment of 10 or 15
+                    degrees).
+                    In order to compute this distance for an angle , we should start from the borders of the image in
+                    that
+                    direction, and then check the pixels toward the centroid point to see where is the first black pixel
+                    (which
+                    would be the outmost black pixel of the character itself in the direction ). If d is the distance of
+                    the
+                    centroid from the border of the image in direction , the coordinates of the first pixel to be
+                    analyzed
+                    are
+                    computed as below:</p>
+                <figure class="figure">
+                    <img src="img/Centroid.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                         width="15%" height="15%"
+                         alt="Centroid-to-boundary distances shown in different directions.">
+                    <figcaption class="figure-caption text-center">Figure 8 - Centroid-to-boundary distances shown in
+                        different directions for the character NOON.
+                    </figcaption>
+                </figure>
+            </li>
+        </ul>
+        <p class="lead para">At first, we intended to use Hough Line and Hough Circle transforms in order to include
+            some features about the lines and curves in the body of characters. However, because the implementation used
+            was not accurate enough in detecting lines and curves in a suitable way, it was decided to discard these
+            types of features. The number of regions used and the parameters
+            related to each type of features were determined in cross validation tests (refer to Section 10). The best
+            accuracy was achieved by dividing the character image to 6 number of regions (3 horizontal and 2 vertical
+            divisions). In this state of parameters, totally 106 number of features form each feature vector.</p>
+    </div>
+</section>
+<!--End section-->
+
+<!--Start section-->
+<a name="7. Training Process"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>7. Training Process</h3>
+        <p class="lead para">Training is the process of preparing (or training) the parameters and values needed by the
+            recognition process for analyzing and recognizing the text in new document pages. Computing the transition
+            and initial probabilities from the language model, and aggregation of the features of training character
+            images of various character classes are among the tasks performed in this stage, which are done only once
+            during the development of the OCR software before it can be used for recognizing the text in new documents
+            and pages.</p>
+    </div>
+</section>
+<!--End section-->
+
+<!--Start section-->
+<a name="7.1. Preparing the Training Character Images"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>7.1. Preparing the Training Character Images</h3>
+        <p class="lead para">In order to capture the characteristics of different character classes, the feature vectors
+            of the training character images of each class should be aggregated to be used during the recognition
+            process for computing the emission probabilities. Collecting the training character images for each
+            character class can be a cumbersome task. One way is to manually crop out the character images from the line
+            images of the training pages. Each character image should be labeled properly based on the name of its
+            corresponding character class, so that later in the training process the program can load and extract
+            features from character images of each class.</p>
+        <p class="lead para">This manual process can take a long time, and therefore we used another semi-automatic
+            method for extracting and labeling the training character images. Firstly, the images of the text lines of
+            the pages used for training are extracted and written to disk by the preprocessing part of the program. Then
+            in each of the line images, we manually mark the boundary between every two characters by vertical black
+            lines with one pixel width. This is done by the means of an image editing software. An example of these
+            marked lines can be seen in the Figure 9 below. On the other hand, the text file containing the text of the
+            training pages should be prepared (Refer to Section 7.3 about this preparation of the text file). At the end
+            of this manual process, a small software program is implemented to extract the character images from the
+            marked lines (by detecting the places of vertical black lines), and to save each character image to disk
+            with the appropriate label. The character class corresponding to each character image is known by
+            reading the type-written text line corresponding to each marked line image. The inclusion of combinatorial
+            characters in the list of character classes makes the implementation of this code a little complex. In
+            Figure 9, notice some of these combinations of characters which are considered as one single character. At
+            the end of this process, the training character images of all the classes are written to disk, and are ready
+            to be used as input for the next stage of the training process (as explained in the next section).</p>
+        <figure class="figure">
+            <img src="img/mark_boundries.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="80%" height="80%"
+                 alt="Mark boundries between characters">
+            <figcaption class="figure-caption text-center">Figure 9 - The boundaries between characters are marked, for
+                the later automatic extraction of training characters
+            </figcaption>
+        </figure>
+    </div>
+</section>
+<!--End section-->
+
+<!--Start section-->
+<a name="7.2. Computing Fundamental Parameters of Emission Probabilities"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>7.2. Computing Fundamental Parameters of Emission Probabilities</h3>
+        <p class="lead para">As mentioned earlier, some parameters are needed to hold the most important characteristics
+            of each character class, so that they can be used in the recognition process for computing the emission
+            probabilities. These representative characteristics are computed by statistically aggregating the feature
+            vectors of the training character images. The type of parameters required to compute emission probabilities
+            is determined by the function used for computing emission probabilities during the recognition process. As
+            it will be explained in Section 8, the function used in this project for this purpose is Modified Quadratic
+            Distance Function. This function requires the mean feature vector, the eigenvectors matrix, and the
+            eigenvalues matrix of each character class, so that it can compare the feature vector of the new character
+            images with all the character classes. Therefore, these three vectors and matrices should be computed for
+            each character class in the training process. The mean vector is simply the average of the feature vectors
+            of the training characters, and thus its size is the same as the number of features used. The eigenvectors
+            and eigenvalues matrices capture more complex statistical information about the features of the training
+            character images. If is the number of features, both of these matrices are of size x.</p>
+        <p class="lead para">The process of computing these parameters for all character classes is rather
+            straightforward. For each class, its training character images are loaded, the features of each image are
+            extracted, and the emission parameters for all the training images are computed. These computations are done
+            by using the statistical functions of the computer vision library used in this project (Refer to Section 9
+            for more information). Finally, the computed parameters for all
+            character classes are saved to disk, so that they can be reloaded and used in the recognition process.</p>
+    </div>
+</section>
+<!--End section-->
+
+<!--Start section-->
+<a name="7.3. Computing Language Model Probabilities"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>7.3. Computing Language Model Probabilities</h3>
+        <p class="lead para">Language model probabilities include the probabilities which reflect some of the properties
+            of the language of the text under analysis. Although the general language properties of the texts written in
+            the same language are almost the same, each book or document can have its own specific language properties,
+            especially when analyzing older texts in which the types of grammar rules or vocabularies used may be
+            different from newer writings in that language. In this project, transition probabilities and initial
+            probabilities are among the language model parameters used to improve the accuracy of the final recognition
+            process.</p>
+    </div>
+</section>
+<!--End section-->
+
+<!--Start section-->
+<a name="7.3.1. Transition Probabilities"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>7.3.1. Transition Probabilities</h3>
+        <p class="lead para">Transition probability is a measure of the frequency of the adjacency of two characters in
+            the language or the document under analysis. Therefore, the transition probability of two character classes
+            and can be computed by the following simple formula:</p>
     </div>
 </section>
 <!--End section-->
