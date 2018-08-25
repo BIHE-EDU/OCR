@@ -496,7 +496,7 @@
             Probability.</p>
         <figure class="figure">
             <img src="img/Hidden markov.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="40%" height="40%"
+                 width="50%" height="50%"
                  alt="A diagram showing the dependency relations between variables in a Hidden Markov Model.">
             <figcaption class="figure-caption text-center">Figure 4 - A diagram showing the dependency relations between
                 variables in a Hidden Markov Model.
@@ -674,7 +674,7 @@
             the effect of executing skew detection and baseline detection programs on part of a page image.</p>
         <figure class="figure">
             <img src="img/Baseline.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="40%" height="40%"
+                 width="80%" height="80%"
                  alt="Some examples of noises in the scanned document.">
             <figcaption class="figure-caption text-center">Figure 6 - The main preprocessings performed on one part of
                 the image of a page
@@ -698,7 +698,7 @@
             phases. Figure 7 shows a text line before and after the elimination of white spaces:</p>
         <figure class="figure">
             <img src="img/before_after.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="40%" height="40%"
+                 width="80%" height="80%"
                  alt="Before and after the elimination of extra white spaces.">
             <figcaption class="figure-caption text-center">Figure 7 - A line image before and after the elimination of
                 extra white spaces
@@ -790,7 +790,7 @@
                     computed as below:</p>
                 <figure class="figure">
                     <img src="img/Centroid.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                         width="15%" height="15%"
+                         width="12%" height="12%"
                          alt="Centroid-to-boundary distances shown in different directions.">
                     <figcaption class="figure-caption text-center">Figure 8 - Centroid-to-boundary distances shown in
                         different directions for the character NOON.
@@ -917,7 +917,7 @@
             and can be computed by the following simple formula:</p>
         <figure class="figure">
             <img src="img/Formula 3.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="40%" height="40%"
+                 width="20%" height="20%"
                  alt="Mark boundries between characters">
         </figure>
         <p class="lead para">As we will see in Section 8, the length (i.e. width) of a character image is an effective
@@ -931,7 +931,7 @@
             character if its length is can be computed as below:</p>
         <figure class="figure">
             <img src="img/Formula 4.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="40%" height="40%"
+                 width="30%" height="30%"
                  alt="Mark boundries between characters">
         </figure>
         <p class="lead para">where is the number of times that is first of word and its image is of length , and is the
@@ -950,7 +950,6 @@
     </div>
 </section>
 <!--End section-->
-
 <!--Start section-->
 <a name="8. Recognition Process"></a>
 <section class=" text-left well well-sm">
@@ -970,7 +969,6 @@
     </div>
 </section>
 <!--End section-->
-
 <!--Start section-->
 <a name="8.1. Distance Function"></a>
 <section class=" text-left well well-sm">
@@ -992,60 +990,13 @@
             each feature, but also covers the way different features vary with relation to each other. The Mahalanobis
             distance function is one which takes advantage of the covariance matrix for achieving higher accuracy. The
             formula of this distance function is as follows:</p>
-    </div>
-</section>
-<!--End section-->
 
-
-<a name="8.1. Distance Function"></a>
-<section class=" text-left well well-sm">
-    <div class="container">
-        <h3>8.1. Distance Function</h3>
-        <p class="lead para">A distance function helps to compute the level of closeness between an image and a
-            character class. The less this distance is, the more similar is the image to the character class. Therefore,
-            the result of the distance function is somehow proportional to the negative of the emission
-            probability. While it is desired that emission probability is maximized, smaller distance values show higher
-            similarity between the image and the model of the character.</p>
-        <p class="lead para">The simplest of the distance functions is the Euclidean distance, which simply computes the
-            sum of the squared differences of the features of the new character image and the mean vector of the
-            character class. This type of distance functions ignores the variances of the features and the relationship
-            of different features with each other. A more accurate distance function should address the difference in
-            the level of significance of different features in each character class. In better words, in the distance
-            function of each character class, the features which are more representative of the characteristics of the
-            class should have higher weights than less important features. The covariance of the features is a measure
-            which can capture these complexities. Covariance matrix not only includes the variances of the values of
-            each feature, but also covers the way different features vary with relation to each other. The Mahalanobis
-            distance function is one which takes advantage of the covariance matrix for achieving higher accuracy. The
-            formula of this distance function is as follows:</p>
-    </div>
-</section>
-<!--End section-->
-
-<a name="8.1. Distance Function"></a>
-<section class=" text-left well well-sm">
-    <div class="container">
-        <h3>8.1. Distance Function</h3>
-        <p class="lead para">A distance function helps to compute the level of closeness between an image and a
-            character class. The less this distance is, the more similar is the image to the character class. Therefore,
-            the result of the distance function is somehow proportional to the negative of the emission
-            probability. While it is desired that emission probability is maximized, smaller distance values show higher
-            similarity between the image and the model of the character.</p>
-        <p class="lead para">The simplest of the distance functions is the Euclidean distance, which simply computes the
-            sum of the squared differences of the features of the new character image and the mean vector of the
-            character class. This type of distance functions ignores the variances of the features and the relationship
-            of different features with each other. A more accurate distance function should address the difference in
-            the level of significance of different features in each character class. In better words, in the distance
-            function of each character class, the features which are more representative of the characteristics of the
-            class should have higher weights than less important features. The covariance of the features is a measure
-            which can capture these complexities. Covariance matrix not only includes the variances of the values of
-            each feature, but also covers the way different features vary with relation to each other. The Mahalanobis
-            distance function is one which takes advantage of the covariance matrix for achieving higher accuracy. The
-            formula of this distance function is as follows:</p>
         <figure class="figure">
             <img src="img/Distance.png" class="figure-img img-fluid rounded center-block" data-html="true"
                  width="40%" height="40%"
                  alt="Formula">
         </figure>
+
         <p class="lead para">where is the inverse of the covariance matrix of the character class, is the mean vector of
             the character class, and is the feature vector of the new character image. If denotes the number of
             features, the covariance matrix is of size x. The diagonal elements of the covariance matrix reflect the
@@ -1055,7 +1006,7 @@
             this distribution suggests:</p>
         <figure class="figure">
             <img src="img/Gaussian.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="40%" height="40%"
+                 width="60%" height="60%"
                  alt="Formula">
         </figure>
 
@@ -1065,19 +1016,22 @@
             this problem, one way is to replace the inverse of the covariance matrix with the equivalent
             eigendecomposition matrices [5]. For a symmetric square matrix like the covariance matrix, the following
             equation holds:</p>
+
         <figure class="figure">
             <img src="img/BVB.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="40%" height="40%"
+                 width="15%" height="15%"
                  alt="Formula">
         </figure>
 
         <p class="lead para">The whole term on the right side of this equation is called the Eigendecomposition of the
             matrix . And then by taking the inverse from both sides, the following equation can be derived:</p>
+
         <figure class="figure">
             <img src="img/Sigma.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="40%" height="40%"
+                 width="20%" height="20%"
                  alt="Formula">
         </figure>
+
         <p class="lead para">In this equation, is a x symmetric matrix (e.g. covariance matrix), is the x eigenvectors
             matrix, and is the x diagonal eigenvalues matrix. The th element on the diagonal of the eigenvalues matrix
             corresponds to the th row of the eigenvectors matrix (i.e. the th eigenvector). The eigendecomposition
@@ -1085,6 +1039,7 @@
             sorted in decreasing order by their power. Therefore, the more powerful and important directions of data are
             collected in the lower indexes of the eigenvectors and eigenvalues matrices. Some of the advantages of using
             the eigendecomposition of the covariance matrix are as follows:</p>
+
         <ul class="fa-ul">
             <li><i class="fa-li fa fa-circle"></i>
                 <p class="lead para">Firstly, the eigendecomposition term, which replaces the covariance inverse, solves
@@ -1105,22 +1060,26 @@
 
         <p class="lead para">As a result of replacing the covariance matrix by the eigendecomposition term, the emission
             probability computed by the Gaussian distribution can be computed this way:</p>
+
         <figure class="figure">
             <img src="img/Gaussian_distribution.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="40%" height="40%"
+                 width="50%" height="50%"
                  alt="Formula">
         </figure>
+
         <p class="lead para">However, for the emission probability it is preferred to use the distance form. Because in
             the Gaussian distribution, several values (most of them very small) are multiplied by each other, sometimes
             the values of emission probabilities may underflow. Therefore, we can add up the negative logarithm of the
             constituent terms of the Gaussian distribution in order to avoid underflow. The result can be called the
             emission distance, and this new form of the function is called Modified Quadratic Distance Function (or
             MQDF):</p>
+
         <figure class="figure">
             <img src="img/MQDF.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="40%" height="40%"
+                 width="60%" height="60%"
                  alt="Formula">
         </figure>
+
         <p class="lead para">where is the emission distance and is the th eigenvalue. Note that the determinant of the
             covariance matrix can also be computed as the addition of the logarithms of the eigenvalues. As we will see
             in Section 8.3, also when computing the total probability of a
@@ -1129,7 +1088,7 @@
     </div>
 </section>
 <!--End section-->
-
+<!--Start section-->
 <a name="8.2. The Challenge of Smoothing Eigenvalues"></a>
 <section class=" text-left well well-sm">
     <div class="container">
@@ -1205,6 +1164,7 @@
 </section>
 <!--End section-->
 
+<!--Start section-->
 <a name="8.3. The Generalized Viterbi Algorithm"></a>
 <section class=" text-left well well-sm">
     <div class="container">
@@ -1238,7 +1198,7 @@
             segmented an input line, and the best character sequence recognized by the algorithm.</p>
         <figure class="figure">
             <img src="img/Example Result.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="30%" height="30%"
+                 width="60%" height="60%"
                  alt="Formula">
             <figcaption class="figure-caption text-center">Figure 12 - The segmentation and recognition result of the
                 OCR program for an input line image
@@ -1268,7 +1228,7 @@
             probabilities table:</p>
         <figure class="figure">
             <img src="img/probablities table.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="30%" height="30%"
+                 width="25%" height="25%"
                  alt="Formula">
         </figure>
         <p class="lead para">Iwhere is the initial probability of character with length , and is the emission
@@ -1281,7 +1241,7 @@
             classes:</p>
         <figure class="figure">
             <img src="img/character classes.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="30%" height="3%"
+                 width="40%" height="40%"
                  alt="Formula">
         </figure>
         <p class="lead para">is the transition probability between the characters and . Note that contains the best
@@ -1303,7 +1263,7 @@
             modified in the following way:</p>
         <figure class="figure">
             <img src="img/negative logarithms.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="30%" height="30%"
+                 width="60%" height="60%"
                  alt="Formula">
         </figure>
         <p class="lead para">In these new formulas, is the emission distance (i.e. the distance form of the emission
@@ -1314,6 +1274,7 @@
 </section>
 <!--End section-->
 
+<!--Start section-->
 <a name="8.3.2. Improving the Performance of the Viterbi Algorithm"></a>
 <section class=" text-left well well-sm">
     <div class="container">
@@ -1369,6 +1330,7 @@
 </section>
 <!--End section-->
 
+<!--Start section-->
 <a name="10. Tests and Results"></a>
 <a name="10.1. Initial Tests and Results"></a>
 <section class=" text-left well well-sm">
@@ -1433,6 +1395,7 @@
 </section>
 <!--End section-->
 
+<!--Start section-->
 <a name="10.2. Attempts to Improve the Results"></a>
 <a name="10.2.1. Using the Length Probabilities of the Characters"></a>
 <section class=" text-left well well-sm">
@@ -1457,13 +1420,14 @@
         <figure class="figure">
             <img src="img/probability of character.png" class="figure-img img-fluid rounded center-block"
                  data-html="true"
-                 width="30%" height="30%"
+                 width="80%" height="80%"
                  alt="Formula">
         </figure>
     </div>
 </section>
 <!--End section-->
 
+<!--Start section-->
 <a name="10.2.2. Removing Some Constant Values from the Emission Distances"></a>
 <section class=" text-left well well-sm">
     <div class="container">
@@ -1507,6 +1471,7 @@
 </section>
 <!--End section-->
 
+<!--Start section-->
 <a name="10.2.4. Using the Average Distances in Comparisons"></a>
 <section class=" text-left well well-sm">
     <div class="container">
@@ -1545,6 +1510,7 @@
 </section>
 <!--End section-->
 
+<!--Start section-->
 <a name="10.3. Final Tests and Results"></a>
 <section class=" text-left well well-sm">
     <div class="container">
@@ -1644,6 +1610,7 @@
             results of the program.</p>
     </div>
 </section>
+<!--End section-->
 
 <!--Start section-->
 <a name="12. Future Work"></a>
