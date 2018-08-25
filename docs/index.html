@@ -135,8 +135,37 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="bibliography.html">Bibliography</a></li>
-                                <li><a href="paper.html">Thesis in PDF</a></li>
+
+                                <li class="dropdown men active "><a href="#8. Recognition Process"
+                                                                    class="dropdown-toggle"
+                                                                    data-toggle="dropdown">8. Recognition Process<b
+                                        class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#8.1. Distance Function">8.1. Distance Function</a></li>
+                                        <li><a href="#8.2. The Challenge of Smoothing Eigenvalues">8.2. The Challenge of
+                                            Smoothing Eigenvalues</a></li>
+                                        <li class="dropdown men active "><a
+                                                href="#8.3. The Generalized Viterbi Algorithm"
+                                                class="dropdown-toggle" data-toggle="dropdown">8.3. The Generalized
+                                            Viterbi Algorithms<b class="caret"></b></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#8.3.1. How Viterbi Algorithm Works">8.3.1. How Viterbi
+                                                    Algorithm Works</a></li>
+                                                <li>
+                                                    <a href="#8.3.2. Improving the Performance of the Viterbi Algorithm">8.3.2.
+                                                        Improving the Performance of the Viterbi Algorithm</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li><a href="#9. About the Implementation Process">9. About the Implementation
+                                    Process</a></li>
+                                <li><a href="#10. Tests and Results">10. Tests and Results</a></li>
+                                <li><a href="#11. Conclusion">11. Conclusion</a></li>
+                                <li><a href="#12. Future Work">12. Future Work</a></li>
+                                <li><a href="#13. References">13. References</a></li>
+                                <li><a href="paper.html">14. Thesis in PDF</a></li>
 
                                 <!--*********************** EDIT ABOVE **********************************-->
                             </ul>
@@ -328,18 +357,19 @@
                 Persian alphabet.
             </figcaption>
         </figure>
-        <p>As different forms of characters suggest, Persian writings are cursive, and most of the characters are
-            connected
-            to each other within a word. This characteristic imposes a great challenge to text segmentation in Persian
-            writings. The lack of space between characters is sometimes even more intense so that the two adjacent
-            characters have vertical overlap with each other. Moreover, some characters are deformed when connected to
-            each
-            other which form a ligature, as another complexity in Persian and Arabic scripts. Also in Arabic and
-            Persian,
-            sometimes a character is accompanied with diacritics or symbols above or below its body, mainly the vowel
-            symbols. These diacritics are different from dots or other symbols which are inherent to some characters.
-            Some
-            of these complexities in Persian and Arabic scripts are illustrated in Figure 1 below.</p>
+        <<p class="lead para">>As different forms of characters suggest, Persian writings are cursive, and most of the
+        characters are
+        connected
+        to each other within a word. This characteristic imposes a great challenge to text segmentation in Persian
+        writings. The lack of space between characters is sometimes even more intense so that the two adjacent
+        characters have vertical overlap with each other. Moreover, some characters are deformed when connected to
+        each
+        other which form a ligature, as another complexity in Persian and Arabic scripts. Also in Arabic and
+        Persian,
+        sometimes a character is accompanied with diacritics or symbols above or below its body, mainly the vowel
+        symbols. These diacritics are different from dots or other symbols which are inherent to some characters.
+        Some
+        of these complexities in Persian and Arabic scripts are illustrated in Figure 1 below.</p>
         <figure class="figure">
             <img src="img/Persian Complex Forms.png" class="figure-img img-fluid rounded center-block" data-html="true"
                  width="40%" height="40%"
@@ -376,7 +406,8 @@
                 used in the text used in this project.
             </figcaption>
         </figure>
-        <p>In many typewritten Persian texts (mostly the older ones), sometimes the characters are stretched for text
+        <p class="lead para">In many typewritten Persian texts (mostly the older ones), sometimes the characters are
+            stretched for text
             justification purposes, and this leads to some deformation in the appearance of the characters. Also in the
             target texts of this project, sometimes at the end of lines one or two characters are translated a little
             above the baseline. These complexities are shown in figures below. All these irregularities impose
@@ -588,7 +619,7 @@
 </section>
 <!--End section-->
 
-!--Start section-->
+<!--Start section-->
 <a name="5.2. Skew Detection"></a>
 <section class="text-left well well-sm">
     <div class="container">
@@ -616,7 +647,7 @@
 </section>
 <!--End section-->
 
-!--Start section-->
+<!--Start section-->
 <a name="5.3. Baseline Detection"></a>
 <section class="text-left well well-sm">
     <div class="container">
@@ -677,7 +708,7 @@
 </section>
 <!--End section-->
 
-!--Start section-->
+<!--Start section-->
 <a name="6. Features Extraction"></a>
 <section class="text-left well well-sm">
     <div class="container">
@@ -884,9 +915,841 @@
         <p class="lead para">Transition probability is a measure of the frequency of the adjacency of two characters in
             the language or the document under analysis. Therefore, the transition probability of two character classes
             and can be computed by the following simple formula:</p>
+        <figure class="figure">
+            <img src="img/Formula 3.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="40%" height="40%"
+                 alt="Mark boundries between characters">
+        </figure>
+        <p class="lead para">As we will see in Section 8, the length (i.e. width) of a character image is an effective
+            parameter in gHMM for determining the way text line is segmented. In this regard, the length chosen for the
+            first character of the line in the segmentation is very important, because Viterbi algorithm starts
+            computing probabilities from the beginning of the line, and a correct choice for the length of the first
+            character can weaken the probabilities of incorrect segmentations. Almost all of the characters appear in
+            their most likely length when they are located at the beginning of the line in the target document of this
+            project. We can take advantage of these facts and compute the initial probabilities based on the length of
+            the character images. If we enter the length parameter to the formula above, the initial probability of the
+            character if its length is can be computed as below:</p>
+        <figure class="figure">
+            <img src="img/Formula 4.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="40%" height="40%"
+                 alt="Mark boundries between characters">
+        </figure>
+        <p class="lead para">where is the number of times that is first of word and its image is of length , and is the
+            number of different possible lengths. Because characters in the target text of this
+            document can appear in many different lengths (especially when considering combinatorial character classes
+            and the stretched forms of characters), it was decided to use a smaller number of length categories, each of
+            which covers 4 or 5 possible lengths. Therefore, if number of length categories is (which is 6 in our
+            project), now the initial probabilities are stored in an x matrix.</p>
+        <p class="lead para">With this new change in the definition of initial probability, now this probability is both
+            related to the language model and the properties of character images. This makes the process of computing
+            initial probabilities a little complex, because the character image corresponding to each first-of-word
+            character in the training text should be found in order to measure its width. Because of this complexity, we
+            decided to compute basic probabilities during the process of extracting character images from marked lines
+            (as explained in Section 7.1), as this process analyzes both the character images and the training text
+            file.</p>
     </div>
 </section>
 <!--End section-->
+
+<!--Start section-->
+<a name="8. Recognition Process"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>8. Recognition Process</h3>
+        <p class="lead para">The recognition of the character sequence corresponding to a text line image is the main
+            functionality of an OCR software program. The main inputs to the recognition process are the text line
+            images which are the result of the preprocessing stage performed on the scanned pages which are entered by
+            the user to be recognized. Also the language model probabilities and the fundamental parameters of emission
+            probabilities, which are the results of the training process, are available to be used in the recognition
+            process. In this stage, for each line image, the generalized version of the Viterbi algorithm is executed,
+            so that the best segmentation scheme and the best character sequence are recognized simultaneously by the
+            algorithm. As mentioned earlier in this paper, in the heart of the Viterbi algorithm a function called a
+            distance function is used to compute the emission probabilities of each character image in the line and each
+            of the character classes. In this section, the details of the Viterbi algorithm and the distance function
+            used are explained, as well as other related concepts.</p>
+    </div>
+</section>
+<!--End section-->
+
+<!--Start section-->
+<a name="8.1. Distance Function"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>8.1. Distance Function</h3>
+        <p class="lead para">A distance function helps to compute the level of closeness between an image and a
+            character class. The less this distance is, the more similar is the image to the character class. Therefore,
+            the result of the distance function is somehow proportional to the negative of the emission
+            probability. While it is desired that emission probability is maximized, smaller distance values show higher
+            similarity between the image and the model of the character.</p>
+        <p class="lead para">The simplest of the distance functions is the Euclidean distance, which simply computes the
+            sum of the squared differences of the features of the new character image and the mean vector of the
+            character class. This type of distance functions ignores the variances of the features and the relationship
+            of different features with each other. A more accurate distance function should address the difference in
+            the level of significance of different features in each character class. In better words, in the distance
+            function of each character class, the features which are more representative of the characteristics of the
+            class should have higher weights than less important features. The covariance of the features is a measure
+            which can capture these complexities. Covariance matrix not only includes the variances of the values of
+            each feature, but also covers the way different features vary with relation to each other. The Mahalanobis
+            distance function is one which takes advantage of the covariance matrix for achieving higher accuracy. The
+            formula of this distance function is as follows:</p>
+    </div>
+</section>
+<!--End section-->
+
+
+<a name="8.1. Distance Function"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>8.1. Distance Function</h3>
+        <p class="lead para">A distance function helps to compute the level of closeness between an image and a
+            character class. The less this distance is, the more similar is the image to the character class. Therefore,
+            the result of the distance function is somehow proportional to the negative of the emission
+            probability. While it is desired that emission probability is maximized, smaller distance values show higher
+            similarity between the image and the model of the character.</p>
+        <p class="lead para">The simplest of the distance functions is the Euclidean distance, which simply computes the
+            sum of the squared differences of the features of the new character image and the mean vector of the
+            character class. This type of distance functions ignores the variances of the features and the relationship
+            of different features with each other. A more accurate distance function should address the difference in
+            the level of significance of different features in each character class. In better words, in the distance
+            function of each character class, the features which are more representative of the characteristics of the
+            class should have higher weights than less important features. The covariance of the features is a measure
+            which can capture these complexities. Covariance matrix not only includes the variances of the values of
+            each feature, but also covers the way different features vary with relation to each other. The Mahalanobis
+            distance function is one which takes advantage of the covariance matrix for achieving higher accuracy. The
+            formula of this distance function is as follows:</p>
+    </div>
+</section>
+<!--End section-->
+
+<a name="8.1. Distance Function"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>8.1. Distance Function</h3>
+        <p class="lead para">A distance function helps to compute the level of closeness between an image and a
+            character class. The less this distance is, the more similar is the image to the character class. Therefore,
+            the result of the distance function is somehow proportional to the negative of the emission
+            probability. While it is desired that emission probability is maximized, smaller distance values show higher
+            similarity between the image and the model of the character.</p>
+        <p class="lead para">The simplest of the distance functions is the Euclidean distance, which simply computes the
+            sum of the squared differences of the features of the new character image and the mean vector of the
+            character class. This type of distance functions ignores the variances of the features and the relationship
+            of different features with each other. A more accurate distance function should address the difference in
+            the level of significance of different features in each character class. In better words, in the distance
+            function of each character class, the features which are more representative of the characteristics of the
+            class should have higher weights than less important features. The covariance of the features is a measure
+            which can capture these complexities. Covariance matrix not only includes the variances of the values of
+            each feature, but also covers the way different features vary with relation to each other. The Mahalanobis
+            distance function is one which takes advantage of the covariance matrix for achieving higher accuracy. The
+            formula of this distance function is as follows:</p>
+        <figure class="figure">
+            <img src="img/Distance.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="40%" height="40%"
+                 alt="Formula">
+        </figure>
+        <p class="lead para">where is the inverse of the covariance matrix of the character class, is the mean vector of
+            the character class, and is the feature vector of the new character image. If denotes the number of
+            features, the covariance matrix is of size x. The diagonal elements of the covariance matrix reflect the
+            variances of the values of each feature, while other elements represent the covariance of the features with
+            relation to each other. It is interesting that the Mahalanobis distance can be derived from the negative
+            logarithm of the emission probability computed by the multivariate Gaussian distribution, as the formula of
+            this distribution suggests:</p>
+        <figure class="figure">
+            <img src="img/Gaussian.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="40%" height="40%"
+                 alt="Formula">
+        </figure>
+
+        <p class="lead para">One common problem that may occur when computing the Mahalanobis distance (or the related
+            probability computed by the Gaussian distribution) is that the covariance matrix is not always invertible;
+            it occurs when the determinant of the covariance matrix is zero or is a very small value. In order to solve
+            this problem, one way is to replace the inverse of the covariance matrix with the equivalent
+            eigendecomposition matrices [5]. For a symmetric square matrix like the covariance matrix, the following
+            equation holds:</p>
+        <figure class="figure">
+            <img src="img/BVB.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="40%" height="40%"
+                 alt="Formula">
+        </figure>
+
+        <p class="lead para">The whole term on the right side of this equation is called the Eigendecomposition of the
+            matrix . And then by taking the inverse from both sides, the following equation can be derived:</p>
+        <figure class="figure">
+            <img src="img/Sigma.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="40%" height="40%"
+                 alt="Formula">
+        </figure>
+        <p class="lead para">In this equation, is a x symmetric matrix (e.g. covariance matrix), is the x eigenvectors
+            matrix, and is the x diagonal eigenvalues matrix. The th element on the diagonal of the eigenvalues matrix
+            corresponds to the th row of the eigenvectors matrix (i.e. the th eigenvector). The eigendecomposition
+            matrices include the directions in which the data has the highest variance, and these new directions are
+            sorted in decreasing order by their power. Therefore, the more powerful and important directions of data are
+            collected in the lower indexes of the eigenvectors and eigenvalues matrices. Some of the advantages of using
+            the eigendecomposition of the covariance matrix are as follows:</p>
+        <ul class="fa-ul">
+            <li><i class="fa-li fa fa-circle"></i>
+                <p class="lead para">Firstly, the eigendecomposition term, which replaces the covariance inverse, solves
+                    the possible non-invertiblity of the covariance matrix.</p>
+            <li><i class="fa-li fa fa-circle"></i>
+                <p class="lead para"> Moreover, the determinant of the covariance matrix (which is also a separate term
+                    in the Gaussian distribution formula) can now be computed just by computing the multiplication of
+                    the eigenvalues (which is the determinant of the eigenvalues matrix too).</p>
+            </li>
+            <li><i class="fa-li fa fa-circle"></i>
+                <p class="lead para">Also the inverse of the eigenvectors and eigenvalues matrices can be computed
+                    indirectly to avoid non-invertiblity problems. Because eigenvectors matrix has the orthonormal
+                    property, its inverse is the same as its transpose. Also the inverse of the eigenvalues matrix can
+                    be computed by inversing the values on the diagonal, because the eigenvalues matrix is a diagonal
+                    matrix.</p>
+            </li>
+        </ul>
+
+        <p class="lead para">As a result of replacing the covariance matrix by the eigendecomposition term, the emission
+            probability computed by the Gaussian distribution can be computed this way:</p>
+        <figure class="figure">
+            <img src="img/Gaussian_distribution.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="40%" height="40%"
+                 alt="Formula">
+        </figure>
+        <p class="lead para">However, for the emission probability it is preferred to use the distance form. Because in
+            the Gaussian distribution, several values (most of them very small) are multiplied by each other, sometimes
+            the values of emission probabilities may underflow. Therefore, we can add up the negative logarithm of the
+            constituent terms of the Gaussian distribution in order to avoid underflow. The result can be called the
+            emission distance, and this new form of the function is called Modified Quadratic Distance Function (or
+            MQDF):</p>
+        <figure class="figure">
+            <img src="img/MQDF.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="40%" height="40%"
+                 alt="Formula">
+        </figure>
+        <p class="lead para">where is the emission distance and is the th eigenvalue. Note that the determinant of the
+            covariance matrix can also be computed as the addition of the logarithms of the eigenvalues. As we will see
+            in Section 8.3, also when computing the total probability of a
+            character sequence in the Viterbi algorithm, negative logarithm of the probabilities are added instead of
+            the multiplication of probabilities, in order to avoid underflow.</p>
+    </div>
+</section>
+<!--End section-->
+
+<a name="8.2. The Challenge of Smoothing Eigenvalues"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>8.2. The Challenge of Smoothing Eigenvalues</h3>
+        <p class="lead para">As mentioned in the previous section, the determinant of the covariance matrix can be
+            computed by multiplying all the eigenvalues (or equivalently by adding the logarithms of the eigenvalues in
+            the distance form). Unfortunately, if some of the eigenvalues are zero or negative, the determinant becomes
+            zero (or infinity in the distance form) and this will affect not only the computed emission probability, but
+            all the multiplications (or additions) to find the best character sequence in the Viterbi algorithm. Also
+            very small eigenvalues can be the cause of noise in the results of the recognition process, either in the
+            determinant or in the eigendecomposition term of the distance function. A segment of a typical eigenvalues
+            matrix (which is for the isolated form of the character SEH (ث)) is shown in Figure 10.</p>
+        <figure class="figure">
+            <img src="img/Eigenvalues1.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="80%" height="80%"
+                 alt="Formula">
+            <figcaption class="figure-caption text-center">Figure 10 - The initial eigenvalues matrix computed from the
+                training characters of the class isolated SEH
+            </figcaption>
+        </figure>
+        <p class="lead para">In order to solve this problem, the general solution is to replace minor eigenvalues of
+            different classes with a constant small value [5]. Because eigenvalues are sorted decreasingly based on the
+            importance and power, this replacement solution means replacing the eigenvalues from the th element toward
+            the end of the eigenvalues matrix. This general solution is called eigenvalues smoothing.</p>
+
+        <p class="lead para">In order to implement the eigenvalues smoothing, one method we tested was to replace the
+            eigenvalues which are smaller than a threshold in all the classes. In this way, in different classes
+            different number of eigenvalues are replaced by . The initial recognition results of using this method were
+            not satisfying. The problem is different number of minor (i.e. very
+            small) eigenvalues in different classes. The tests showed that stronger character classes (i.e. those with
+            larger number of training examples) usually have less minor eigenvalues that should be replaced than weaker
+            classes (i.e. those with fewer number of training character images). This is mostly because of the larger
+            variances when a wider range of training examples are available for a class. In some of the classes with a
+            very few number of training examples, nearly all of the eigenvalues should be replaced. Because of this
+            fact, there will be a huge divide between the values of the determinant in weak classes and strong classes.
+            In weaker classes, a higher power of the replacement value will constitute the determinant and this leads to
+            a much lower determinant in comparison with the determinant of the stronger classes. The lower determinant
+            abnormally increases the emission probabilities of weaker classes and unfairly increases the possibility of
+            choosing such classes by the Viterbi algorithm in the recognition process.</p>
+        <p class="lead para">An ideal solution for the challenge of smoothing eigenvalues is to use different thresholds
+            and replacement
+            values for different classes. However, these suitable values of and can just be computed by performing a
+            large number of cross-validation tests (for different possible values of and for different classes) which
+            seems not feasible. Therefore, at least some of these smoothing parameters (i.e. the threshold , the
+            starting index , or the replacement value ) should be set the same for all classes.</p>
+        <p class="lead para">The method we finally used successfully is to make the value of and the same for all
+            character classes. This
+            method ensures more stability than the previous method used, because the eigenvalues of all the classes are
+            smoothed from the same index toward the end of the matrix. Despite this advantage, for the classes which the
+            number of their meaningful eigenvalues (i.e. large enough eigenvalues) is lower than the index , the
+            decreasing order of the eigenvalues may become disorganized. Therefore, for the eigenvalues of some classes,
+            from where in the matrix that eigenvalue is lower than to the element should also be replaced so that the
+            decreasing order of eigenvalues is kept intact. In Figure 11 below, the first segment of the eigenvalues
+            matrix of the class isolated SEH (ث) is shown after replacing minor eigenvalues when and . Although is 10,
+            only the first five eigenvalues remain intact in order to keep the decreasing order.</p>
+        <figure class="figure">
+            <img src="img/Eigenvalues1.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="80%" height="80%"
+                 alt="Formula">
+            <figcaption class="figure-caption text-center">Figure 11 - Performing eigenvalues smoothing for the class
+                isolated SEH, when k=10 and delta=0.001
+            </figcaption>
+        </figure>
+        <p class="lead para">TThe suitable value for and should be determined by cross validation tests. Our tests show
+            that when there is some number of classes with very few training examples and thus a few numbers of
+            meaningful eigenvalues, smaller values for are more suitable. Small values for mean that many of the
+            meaningful eigenvalues in stronger classes should be replaced by the constant . As a result, the recognition
+            power of the model of stronger classes may decrease to some level. However, when all of the classes have an
+            adequate minimum of training examples, then larger values for can be chosen, and most of the meaningful
+            eigenvalues in different classes will remain intact. This usually results in forming better emission models
+            for character classes.</p>
+    </div>
+</section>
+<!--End section-->
+
+<a name="8.3. The Generalized Viterbi Algorithm"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>8.3. The Generalized Viterbi Algorithm</h3>
+        <p class="lead para">As explained earlier in this document, the Viterbi algorithm is the heart of the character
+            recognition process, because it computes the character sequence with maximum probability of being the true
+            guess for the input text line image. Because in this project no separate character segmentation process is
+            used, a generalized version of the Viterbi algorithm is applied so that both the best segmentation scheme
+            and the best character sequence are determined simultaneously.</p>
+    </div>
+</section>
+<!--End section-->
+
+<a name="8.3.1. How Viterbi Algorithm Works"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>8.3.1. How Viterbi Algorithm Works</h3>
+        <p class="lead para">In the classic version of the Viterbi algorithm, an outer loop iterates over the segmented
+            character images (i.e. the observations), and an inner loop spans all the character classes. In the
+            generalized Viterbi algorithm, no set of segmented character images are available, therefore the outer loop
+            should iterate over different possible segmentations. Neither the number of the
+            characters of the line nor the position and length of each character are known. In order to parameterize a
+            character image in a segmentation state, two variables and are used. is the length (i.e. width) of each
+            character, while is the ending position of the character in the line image. By iterating over all possible
+            values of and , all the possible character images in different segmentation states are covered. Therefore,
+            in the generalized Viterbi, two other variables are also changed in addition to the character class, and
+            this forms three nested loops in the body of the Viterbi algorithm. While the minimum and maximum values of
+            the variable depend on the width of the text line image, the minimum and maximum values of are determined
+            based on the minimum and maximum possible lengths of a character image (which can be decided based on the
+            training character images). Figure 12 shows the way the implemented generalized Viterbi algorithm has
+            segmented an input line, and the best character sequence recognized by the algorithm.</p>
+        <figure class="figure">
+            <img src="img/Example Result.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="30%" height="30%"
+                 alt="Formula">
+            <figcaption class="figure-caption text-center">Figure 12 - The segmentation and recognition result of the
+                OCR program for an input line image
+            </figcaption>
+        </figure>
+        <p class="lead para">As mentioned earlier, the Viterbi algorithm attempts to find the character sequence with
+            maximum joint
+            probability (or with minimum total distance). For this purpose, in the iterative implementation of the
+            generalized Viterbi algorithm, two main three-dimensional tables are used to store the important information
+            needed: the probabilities (or distances) table and the paths table. Each element in the probabilities table
+            should store the joint probability of the best character sequence which is finished in position of the line
+            image, and the final character of this sequence is the character with length . Also each element in the
+            paths
+            table stores the information of the previous character in the best character sequence which is finished in
+            position with character as the last character of the sequence and as its
+            length. The paths table is mainly used at the end of the Viterbi algorithm in order to rebuild the best
+            character sequence corresponding to the entire line. By starting from the first elements of the
+            probabilities
+            table and iteratively filling the next elements by using the information of the previously-filled elements,
+            the
+            iterative Viterbi algorithm finds the best character sequence.</p>
+        <p class="lead para">In the first step, the probabilities of all the possible first characters of the line are
+            computed and stored in
+            the probabilities table. It means for each possible length which is equal to (meaning it is the first
+            character
+            of the line) and for each character class , the following probability is computed and stored in the
+            probabilities table:</p>
+        <figure class="figure">
+            <img src="img/probablities table.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="30%" height="30%"
+                 alt="Formula">
+        </figure>
+        <p class="lead para">Iwhere is the initial probability of character with length , and is the emission
+            probability for the similarity between character and the character image with length ending in position of
+            the line image. Note that actually the length category is important in initial probability rather than the
+            length itself.</p>
+        <p class="lead para">After this first initialization step, is incremented one by one in the outer loop and the
+            following
+            computations are done for different possible lengths (those which are not equal to ) and different character
+            classes:</p>
+        <figure class="figure">
+            <img src="img/character classes.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="30%" height="3%"
+                 alt="Formula">
+        </figure>
+        <p class="lead para">is the transition probability between the characters and . Note that contains the best
+            probability for the
+            character with length before the current character. When at the end of the Viterbi algorithm, the
+            probabilities
+            for the highest possible position (which is the ending position of the line image) are computed and stored,
+            the
+            best character sequence (and the corresponding segmentation scheme) can be retrieved by going back in the
+            paths
+            table and determining the best character and length at each step until the best first character of the line
+            is
+            reached.</p>
+        <p class="lead para">As mentioned in Section 8.1, in order to avoid underflows arisen from large number of
+            multiplications of small
+            values, it is better to use distances instead of probabilities in the Viterbi algorithm. As a result, the
+            character sequence with minimum total distance should be chosen as the best one. In order to use distances
+            instead of probabilities, the negative logarithms of the probabilities are used and the formulas above are
+            modified in the following way:</p>
+        <figure class="figure">
+            <img src="img/negative logarithms.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="30%" height="30%"
+                 alt="Formula">
+        </figure>
+        <p class="lead para">In these new formulas, is the emission distance (i.e. the distance form of the emission
+            probability) and is
+            computed by the MQDF introduced in Section 8.1.</p>
+
+    </div>
+</section>
+<!--End section-->
+
+<a name="8.3.2. Improving the Performance of the Viterbi Algorithm"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>8.3.2. Improving the Performance of the Viterbi Algorithm</h3>
+        <p class="lead para">The generalized Viterbi algorithm is much slower than the classic version of Viterbi,
+            especially because of iterating over all possible segmentations. One way to normalize its performance is to
+            assume that the unit of length is more than one pixel (e.g. three or four pixels). Each of these units is
+            called a block. In this way, far less number of iterations would be used in the algorithm for changing
+            length values, though the accuracy of the algorithm would also be affected (as we will see in Section 10).
+            In our project, a character image can have a minimum length of 4 and a maximum length of 40 pixels.
+            Therefore if a block length of 3 is used, the length of each character image can be at least equal to one
+            block and at most equal to 13 blocks. Now the iteration over all possible segmentations can be interpreted
+            as dividing the line image into maximum possible number of blocks, and then analyzing all the possible ways
+            that series of adjacent blocks can join each other to form character images.</p>
+        <p class="lead para">Another bottleneck in the performance of the generalized Viterbi algorithm is the fact that
+            (i.e. the emission distance of a specific character image and a character class) may be repeated many times
+            during the algorithm, because the character image ending in position with length is present in many
+            different segmentation schemes. The total time used for computing emission distances constitutes a large
+            part of the total execution time of the Viterbi algorithm, because each of the emission distance
+            computations includes both extracting features and computing several number of matrix multiplications.
+            Therefore, another way to improve performance is to store the emission distances the first time they are
+            computed, and in the next times read the previously stored values instead of recomputing the same emission
+            distances. This can be achieved by using another three-dimensional table for emission distances. The element
+            stores the emission distance of the character class and the character image starting from position toward
+            the position in the line image.</p>
+        <p class="lead para">We still can have more performance optimizations through the emission distances, by paying
+            attention to those computations in the MQDF that are not dependent on the character image under analysis. In
+            this regard, the eigendecomposition term (i.e. the term ) is only dependent on the character class and can
+            be computed from the eigenvalues and eigenvectors matrices of the class (which were prepared during the
+            training process). Also this computation is a time-consuming task, because it involves two multiplications
+            between three square matrices. Therefore, computation of the eigendecomposition term in the distance
+            function can
+            be performed once before the recognition process (e.g. in the training process itself). Doing this
+            modification was also very helpful in reducing the execution time of the recognition process.</p>
+    </div>
+</section>
+<!--End section-->
+
+<a name="9. About the Implementation Process"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>9. About the Implementation Process</h3>
+        <p class="lead para">In this section, some brief information about the implementation process and the
+            programming languages and libraries used are given. Various parts of the OCR program of this project were
+            all implemented in C++ programming language. Also, the OpenCV library was massively used for the image
+            processing and the matrix computations of the program.</p>
+        <p class="lead para">Both the descriptive information (i.e. the ID and Unicode values) and the emission
+            parameters of character classes were stored in YAML files, through the persistence API of the OpenCV
+            library. The tables of language model probabilities were also saved in a separate YAML file during the
+            training process. All the information in these files is loaded at the beginning of the recognition
+            process.</p>
+    </div>
+</section>
+<!--End section-->
+
+<a name="10. Tests and Results"></a>
+<a name="10.1. Initial Tests and Results"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>10. Tests and Results</h3>
+        <h3>10.1. Initial Tests and Results</h3>
+        <p class="lead para">For testing the OCR program implemented, firstly the training program should be executed in
+            order to prepare the language model probabilities and the emission parameters needed in the character
+            recognition process. The training text used is the holy Baha’i book ‘Maede-ye-Asemani’, the 5th volume. The
+            scanned version of the book was available, but the appropriate text version was not available, and therefore
+            the needed pages of the book were typed (because of the considerations explained in Section 7). About 25
+            pages of the text were used for the training process. This may not be enough for having strong language
+            model and emission parameters; however, because preparing the training data is a time-consuming task, at
+            this stage we preferred to continue with these 25 training pages. A larger set of training data can be
+            prepared in future in order to achieve better results.</p>
+        <p class="lead para">The first task in the training process is to extract the character images from the training
+            pages. For this purpose, firstly the manual process of marking the boundaries between characters in the text
+            lines of the training pages was done, which was a time-consuming task. Then, the small
+            program implemented for extracting the characters from these marked lines was executed. As a result, about
+            15000 training character images were extracted. As we included about 322 character classes for the initial
+            tests, an average of 46 training characters were prepared for each character class. However, number of
+            training characters of classes is not uniform enough. For example, more than 80 classes have less than 10
+            training characters, while the number of classes with more than 50 training characters is only 65. In the
+            next step, the language model probabilities and the emission parameters were computed in separate
+            processes.</p>
+        <p class="lead para">In order to determine the best values for some important parameters and variables of the
+            system, a set of cross-validation tests were done on the character recognition program. Different parameters
+            were changed during these tests, from the index and the replacement value in eigenvalues smoothing, to the
+            parameters related to feature types and regions. Three other pages of the training text were used (both
+            scanned images of the text and the typed text version) for the cross-validation tests.</p>
+        <p class="lead para">TIn the tests, in order to estimate the accuracy of the results, the character recognitions
+            of the program should be finally compared with the ground truth (that is, the typed text version of the test
+            pages). This evaluation should be done for each text line, and finally the results of all the text lines can
+            be aggregated. One measure suitable for comparing character sequences is the Levenshtein Distance. This
+            measure computes the minimum number of insertions, deletions, or substitutions that can be done to convert
+            the first text sequence into the second one. Therefore, it actually computes the level of error in the
+            results, and should be minimized as possible. The reason we use such a measure instead of simply comparing
+            the corresponding characters, is that the number of characters recognized by the OCR program may not match
+            with the true number of characters of the text line. The percentage of the accuracy can be estimated by
+            dividing the Levenshtein distance value by the true number of characters and subtract the result from 1.</p>
+        <p class="lead para">The fact that combinatorial characters were included among the character classes of the
+            system imposes some complexities in computing the Levenshtein distance. For example if the system correctly
+            recognizes two adjacent characters separately, while the combination of these two is also a separate
+            character class, obviously the system should not compute this recognition of the system as an error. In
+            order to circumvent such problems when computing the Levenshtein distance, for each line both the recognized
+            character sequence and the true character sequence are firstly reduced to the Unicode values of the
+            characters, and then the computation of Levenshtein distance is done on the lists of Unicode values (instead
+            of the sequences of character classes). Note that combinatorial characters include more than one Unicode
+            values. In addition to the mentioned trick, one other complexity is related to the different forms of
+            each character. For each character, usually at least two of the forms have a very similar appearance. For
+            example, the initial and the medial forms of the character CHE (چ) are almost the same, while the final and
+            isolated forms are also very similar. Therefore, if the OCR program recognizes one form instead of the other
+            similar form, it may be more logical to consider the recognition as correct. The logic behind including
+            different forms of the characters and the combinatorial characters as independent character classes is that
+            this inclusion can help to better recognize the character sequences, and therefore these are somehow helper
+            classes. Because of this fact, we included some rules of similarity in the test process, so that similar
+            forms of the same character are supposed to be the same when computing the Levenshtein distance.</p>
+        <p class="lead para">The best accuracy achieved in the first set of cross-validation tests was 65.6%. This level
+            of accuracy is not acceptable enough; therefore, after analyzing the problems in the recognition results,
+            some new tricks were implemented in order to improve the total accuracy.</p>
+    </div>
+</section>
+<!--End section-->
+
+<a name="10.2. Attempts to Improve the Results"></a>
+<a name="10.2.1. Using the Length Probabilities of the Characters"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>10.2. Attempts to Improve the Results</h3>
+        <h3>10.2.1. Using the Length Probabilities of the Characters</h3>
+        <p class="lead para">One fact observable in the initial recognition results was that sometimes a combination of
+            three or four characters were recognized as one single character by the OCR program. Almost none of the
+            training images of the recognized character were such lengthy. Therefore, it was decided to use the effect
+            of character length probabilities in order to reduce the possibility of choosing a character for a line
+            segment whose length is not common for the mentioned character. About the initial probabilities, the lengths
+            of the characters were taken into account. Now, it was decided to include the length probabilities for all
+            the characters in the line (not only the first character of the line).</p>
+        <p class="lead para">The length probabilities are computed in the training process in almost the same way as the
+            initial probabilities; the only difference is that for length probabilities no condition on the location of
+            characters in the words or lines is considered. As a result, the length probabilities can be computed by
+            analyzing the length of the training character images. Also the lengths are categorized into six different
+            categories, the same as the categories used for initial probabilities.</p>
+        <p class="lead para">Length probabilities are entered to the total distance formula of the Viterbi algorithm,
+            with a similar role to the emission distances and the language model probabilities. If the length
+            probability of a character image is denoted by , the formula is changed in the following way:</p>
+        <figure class="figure">
+            <img src="img/probability of character.png" class="figure-img img-fluid rounded center-block"
+                 data-html="true"
+                 width="30%" height="30%"
+                 alt="Formula">
+        </figure>
+    </div>
+</section>
+<!--End section-->
+
+<a name="10.2.2. Removing Some Constant Values from the Emission Distances"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>10.2.2. Removing Some Constant Values from the Emission Distances</h3>
+        <p class="lead para">One other observation in the initial results was that some emission distance values are
+            negative. These negative values are not signs of error in the OCR system, and it is normal for the MQDF to
+            output negative values. However, we guessed that these negative values may be sources of some instability in
+            the results. Also we found that some part of the emission distance formula includes a fixed large negative
+            value which is the same for all the character classes in the current implementation, and thus can be removed
+            from the MQDF. One part of this fixed value is , which is only dependent on the number of features. Another
+            part is the part of the determinant term which is calculated from the minor eigenvalues (that is,
+            eigenvalues from to the end of the matrix). This fixed part of the determinant can be mathematically showed
+            as and in practice is equal to , which is a large negative value. Therefore, removing these two terms (shown
+            below) can make all the emission distance values positive:</p>
+        <figure class="figure">
+            <img src="img/emission distance.png" class="figure-img img-fluid rounded center-block"
+                 data-html="true"
+                 width="30%" height="30%"
+                 alt="Formula">
+        </figure>
+    </div>
+</section>
+<!--End section-->
+
+<a name="10.2.3. Scaling Down the Emission Distance Values"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>10.2.3. Scaling Down the Emission Distance Values</h3>
+        <p class="lead para">Another potential source of error was the fact that emission distance values have a very
+            large range of variance (about hundreds or thousands), while the difference between the highest and the
+            lowest language model probabilities is at most 20. Therefore, the effect of emission distances on the final
+            recognition results is far more than the effect of language model probabilities and the newly added length
+            probabilities. This large variance among the emission distances may be mostly the result of the parameters
+            chosen for eigenvalues smoothing in cross-validation tests.</p>
+        <p class="lead para">One way to reduce this large dominance of emission distances in the final results is to
+            scale down the emission distance values. Different new intervals should be tested to know how much scaling
+            should be done to achieve the best results. Although this is not a mathematically-proven trick, a
+            considerably large improvement in the results is achieved with this type of change (as we will see in
+            Section 10.3).</p>
+    </div>
+</section>
+<!--End section-->
+
+<a name="10.2.4. Using the Average Distances in Comparisons"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>10.2.4. Using the Average Distances in Comparisons</h3>
+        <p class="lead para">In the body of the Viterbi algorithm, the character sequences whose total distances are
+            compared with each other in order to find the minimum distance necessarily does not include the same number
+            of characters. For example, at one point the total distance of a sequence with 20 characters may be compared
+            with the total distance of a sequence with 12 characters. This may not always be a fair comparison, because
+            in this way there will be a general tendency to choose the sequences with less number of characters. The
+            reason is that adding up less number of positive values generally may lead to a lower total distance. It may
+            be more reasonable to compare the average distance of the character sequences. The average distance is
+            computed by dividing the total distance by the number of characters in the sequence.</p>
+        <p class="lead para">In order to use average distances in comparisons, the number of characters of each
+            character sequence should be known at each moment. A new three-dimensional table (e.g. called sequence
+            lengths table) can be used to store the number of characters of the best sequences. The element of this new
+            table stores the number of characters in the best sequence that ends at position with a final character
+            image of length and recognized as character . Now at each stage of the Viterbi algorithm, the best previous
+            character can be determined by:</p>
+        <figure>
+            <img src="img/argmin.png" class="figure-img img-fluid rounded center-block"
+                 data-html="true"
+                 width="30%" height="30%"
+                 alt="Formula">
+        </figure>
+        <p class="lead para">Where is the current character and is its length, and are respectively the class and the
+            length of the previous character (which should be determined). Also when the best and are determined, the
+            number of characters of the best sequence ending with is stored in the appropriate element of the sequence
+            lengths table:</p>
+        <figure>
+            <img src="img/sequence.png" class="figure-img img-fluid rounded center-block"
+                 data-html="true"
+                 width="30%" height="30%"
+                 alt="Formula">
+        </figure>
+    </div>
+</section>
+<!--End section-->
+
+<a name="10.3. Final Tests and Results"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>10.3. Final Tests and Results</h3>
+        <p class="lead para">After implementing each of the explained modifications to the OCR program, some new
+            cross-validation tests were performed. A summary of the best test results of the system after each of these
+            changes is shown in Table 2. As it can be seen, the most significant improvement in the results was achieved
+            by scaling down the emission distance values, while applying length probabilities and using average
+            distances in the comparisons of the Viterbi algorithm both improved the results to some extent. Eliminating
+            the constant values from the emission distances did not show any significant improvement in the accuracy of
+            the program.</p>
+        <figure class="figure">
+            <img src="img/results table.png" class="figure-img img-fluid rounded center-block" data-html="true"
+                 width="80%" height="80%"
+                 alt="Formula">
+            <figcaption class="figure-caption text-center">Table 2 - The best results of the OCR program under different
+                conditions
+            </figcaption>
+        </figure>
+
+        <p class="lead para">One other modification which helped to improve the results was considering a horizontal
+            overlap between the smaller regions of the image during the feature extraction phase. This technique can
+            help to reduce the effect of minor horizontal translations of the character body in the segmented character
+            images. One other factor which should be mentioned here is the length of the blocks used in the Viterbi
+            algorithm (as explained in Section 8.3.2). If we decrease the block length, naturally the results may
+            improve, because the text line image can be segmented more neatly and precisely. However, this improvement
+            comes with a side effect on the performance and execution speed of the OCR program.</p>
+
+        <p class="lead para">Regarding the performance of the program, the typical average execution time of the program
+            in recognition of a typical text page is about 150 minutes. That is about 7 minutes for a typical text line
+            which has a width of about 380 pixels. Before implementing the performance optimizations explained in
+            Section 8.3.2, the performance was much worse and unpractical, and it took about 100 minutes to recognize a
+            typical text line. Also one other source of slowness in that time was the recursive implementation of the
+            generalized Viterbi algorithm, so we turned to the iterative approach which is much faster. It should be
+            noted that some other factors also affect the execution time of the program, such as the block length, the
+            minimum and maximum possible lengths of a character image, the number of character classes, the number of
+            features, etc.</p>
+</section>
+<!--End section-->
+
+<!--Start section-->
+<a name="11. Conclusion"></a>
+<section class="text-md-left well well-sm">
+    <div class="container">
+        <h3><a href="index.html">11. Conclusion</a></h3>
+        <p class="lead para">In this project, we implemented an OCR software program which is capable of recognizing the
+            text in the
+            scanned images of the documents written in a specific older Persian font. Hidden Markov Models (HMM) was
+            used as the mathematical tool for modeling the character recognition problem, mainly
+            because HMM helps to take advantage of both the language model and the emission distances in service of the
+            recognition of characters. Also because Persian writings are cursive and thus the segmentation of text lines
+            into characters is a complicated problem, we preferred to perform the character segmentation and the
+            character recognition processes simultaneously. This combination of segmentation and recognition becomes
+            possible by using the generalized Hidden Markov Models (gHMM).</p>
+
+        <p class="lead para">Language model probabilities and emission probabilities are the most important parameters
+            used by gHMM for
+            recognizing the best segmentation of characters and the best character sequence corresponding to a text line
+            image. Therefore, these parameters should be prepared in the training process, before the OCR program can
+            run. Language model probabilities, including transition and initial probabilities are trained using the
+            appropriately type-written text version of the training document. For preparing the parameters used for
+            computing emission probabilities, firstly the training character images of all the character classes are
+            extracted from the scanned pages of the training document. This extraction of training character images is
+            done by marking the boundaries of characters in line images and then running a simple program to extract and
+            label each character image. After that, the emission parameters of all the character classes are computed
+            and saved by extracting and aggregating the features of the training character images. The features used in
+            this project for representing character images are mostly statistical features, which give information about
+            the way black pixels are distributed in different regions of each character image.</p>
+
+        <p class="lead para">The input to the recognition process is the scanned images of the pages. Therefore, before
+            starting the main
+            recognition process, some preprocessing is done by the program on the page images. The skew of the pages are
+            detected and corrected by testing some criteria on different rotations of each page and finding the best
+            angle. Then, the bounding boxes of the text lines in each page are detected by comparing all the possible
+            horizontal strips in the page with a trained pattern of text lines. These comparisons are done by using the
+            horizontal projections of the text line boxes. The final step in the preprocessing stage is the elimination
+            of white spaces from within and right and left sides of each line image.</p>
+
+        <p class="lead para">In the main character recognition process, the generalized version of the Viterbi algorithm
+            is used to
+            iterate over all possible segmentations and all possible character sequences for each segmentation in order
+            to find the best characters for the line image. For the comparisons of different character sequences in the
+            Viterbi algorithm, a joint probability (or a total distance) formula based on the HMM is used, which
+            combines the emission and the language model probabilities. For computing emission probabilities (or
+            emission distances), a distance function called MQDF is used, which uses the mean vector and the eigenvalues
+            and eigenvectors matrices of a character class in order to compute the closeness of a character image to the
+            class.</p>
+
+        <p class="lead para">After doing a training phase by using 25 training pages, a series of cross-validation tests
+            were done in
+            order to find the best values for the important variables and parameters of the program. The best result
+            achieved in the final tests of the program was 85.5% accuracy in recognizing the true characters.
+            Modifications in the program like using the length probabilities in the Viterbi total distance formula,
+            scaling down the values of the emission distances, and using average distances in comparisons, all helped to
+            improve the accuracy of the implemented OCR program. Also factors such as using a larger body of training
+            data and reducing the size of the block lengths in the Viterbi algorithm are effective on improving the
+            results of the program.</p>
+    </div>
+</section>
+
+<!--Start section-->
+<a name="12. Future Work"></a>
+<section class="text-left well well-sm">
+    <div class="container">
+        <h3><a href="index.html">12. Future Work</a></h3>
+        <br>
+        <p class="lead para">Some of the steps that can be done to improve the recognition accuracy of the OCR program
+            implemented in this
+            project are explained below. In addition to these potential improvements, for implementing a complete and
+            reliable Persian OCR software application which can be used widely (especially for recognition of historical
+            documents and books), many other complications should be addressed and the program should have many other
+            features. For instance, it will be much better that an OCR application is capable of covering more different
+            font sizes and font families, and it should be able to handle different page styles. Another worthy
+            direction of research in relation to Persian OCR is the recognition of handwritten Persian writings, which
+            introduces new complexities and variations.</p>
+        <ul class="fa-ul">
+            <li><i class="fa-li fa fa-circle"></i>
+                <p class="lead para">The first way of improving the results of this OCR program is to collect and
+                    prepare more training data.
+                    As mentioned earlier in this document, the number of training pages used in this project was not
+                    enough.
+                    Although it is a time-consuming manual task, preparing a much larger body of training text not only
+                    makes
+                    language model probabilities and emission parameters more precise and stronger, but also helps to
+                    increase
+                    the stability in the recognition results. All the character classes should have a good minimum
+                    number of
+                    training character images.</p>
+            </li>
+            <li><i class="fa-li fa fa-circle"></i>
+                <p class="lead para">The features extracted from character images are the most important factors in
+                    recognizing the characters.
+                    In Persian OCR, using more structural features may improve the discriminative power of the
+                    recognition
+                    process. Some important structural features are the lines and curves of each character, and also
+                    information
+                    about the connected components, dots, links, branches, etc. Thinning the body of the characters and
+                    creating a
+                    thin skeleton of
+                    each character before the feature extraction process can help to increase the power of the
+                    structural
+                    features used.</p>
+            </li>
+            <li><i class="fa-li fa fa-circle"></i>
+                <p class="lead para">Using the Gaussian Mixtures technique is another way to improve the recognition
+                    results. In this method,
+                    firstly a clustering technique is applied to the training images of each character, in order to
+                    determine
+                    how the training feature vectors are distributed. Then for each cluster different emission
+                    parameters are
+                    computed and stored. In the recognition process, the distance function for measuring the closeness
+                    to a
+                    character image computes a weighted sum (or a mixture) of the emission parameters of the clusters of
+                    the
+                    class. This method helps to address the large variances in the training images of the characters,
+                    and
+                    improves the emission model of each character class.</p>
+            </li>
+        </ul>
+    </div>
+</section>
+<!--End section-->
+
+<!--*********************** EDIT BELOW **********************************-->
+<!--Start section-->
+<a name="13. References"></a>
+<section class="text-left well well-sm">
+    <div class="container">
+        <ul class="list-unstyled">
+            <h3>13. References</h3>
+            <li>[1] A. Amin, “Offline Arabic Character Recognition: the State of the Art”,
+                Pattern Recognition, vol. 31, issue 5, pp. 517-530, March 1998.
+            </li>
+            <li>[2] L. Lorigo and V. Govindaraju, “Offline Arabic Handwriting Recognition: A
+                Survey”, IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 28, issue 5, 2006.<
+            <li>
+            <li>[3] M.S. Khorsheed, “Recognizing Handwritten Arabic Manuscripts using a Single
+                Hidden Markov Model”, Pattern Recognition, vol. 24, pp. 2235-2242, 2003.
+            </li>
+            <li>[4] M. Dehghan, K. Faez, M. Ahmadi, and M. Shridhar, “Handwritten Farsi
+                (Arabic) Word Recognition: A Holistic Approach using Discrete HMM”, Pattern Recognition, vol. 34, pp.
+                1057-1065, 2001.
+            </li>
+            <li>[5] F. Hedayati, J. Chong, K. Keutzer, “Recognition of Tibetan Wood Block
+                Prints with Generalized Hidden Markov and Kernelized Modified Quadratic Distance Function”, EECS
+                Department,
+                University of California, Berkeley, November 2010.
+            </li>
+            <li>[6] M. Laine and O.S. Nevalainen, “A Standalone OCR System for Mobile Camera
+                Phones”, The 17th Annual IEEE International Symposium on Personal, Indoor, and Mobile Radio
+                Communications.
+            </li>
+            <li>[7] M.S. Khorsheed, W.F. Clocksin, “Structural Features of Cursive Arabic
+                Script”, The 10th British Machine Vision Conference, University of Nothingham, vol. 2, pp. 422-431.
+            </li>
+            <li>[8] J. Shanbehzadeh, H. Pezashki, A. Sarrafzadeh, “Features Extraction from
+                Farsi Handwritten Letters”, Proceedings of Image and Vision Computing, pp. 35-40, Hamilton, New Zealand,
+                December 2007.
+            </li>
+        </ul>
+    </div>
+</section>
+<!--End section-->
+<!--*********************** EDIT ABOVE **********************************-->
+
 
 <!--*********************** EDIT ABOVE **********************************-->
 <!--Core Scripts-->

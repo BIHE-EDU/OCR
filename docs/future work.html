@@ -63,6 +63,47 @@
     </div>
 </section>
 <!--End section-->
+
+<!--Start section-->
+<section class="text-left well well-sm">
+    <div class="container">
+        <h3><a href="index.html">Future Work</a></h3>
+        <br>
+        <p>Some of the steps that can be done to improve the recognition accuracy of the OCR program implemented in this
+            project are explained below. In addition to these potential improvements, for implementing a complete and
+            reliable Persian OCR software application which can be used widely (especially for recognition of historical
+            documents and books), many other complications should be addressed and the program should have many other
+            features. For instance, it will be much better that an OCR application is capable of covering more different
+            font sizes and font families, and it should be able to handle different page styles. Another worthy
+            direction of research in relation to Persian OCR is the recognition of handwritten Persian writings, which
+            introduces new complexities and variations.</p>
+        <ul class="info-list">
+            <li>The first way of improving the results of this OCR program is to collect and prepare more training data.
+                As mentioned earlier in this document, the number of training pages used in this project was not enough.
+                Although it is a time-consuming manual task, preparing a much larger body of training text not only makes
+                language model probabilities and emission parameters more precise and stronger, but also helps to increase
+                the stability in the recognition results. All the character classes should have a good minimum number of
+                training character images.</li>
+            <li>The features extracted from character images are the most important factors in recognizing the characters.
+                In Persian OCR, using more structural features may improve the discriminative power of the recognition
+                process. Some important structural features are the lines and curves of each character, and also information
+                about the connected components, dots, links, branches, etc. Thinning the body of the characters and creating a
+                thin skeleton of
+                each character before the feature extraction process can help to increase the power of the structural
+                features used.</li>
+            <li>Using the Gaussian Mixtures technique is another way to improve the recognition results. In this method,
+                firstly a clustering technique is applied to the training images of each character, in order to determine
+                how the training feature vectors are distributed. Then for each cluster different emission parameters are
+                computed and stored. In the recognition process, the distance function for measuring the closeness to a
+                character image computes a weighted sum (or a mixture) of the emission parameters of the clusters of the
+                class. This method helps to address the large variances in the training images of the characters, and
+                improves the emission model of each character class.</li>
+        </ul>
+    </div>
+</section>
+<!--End section-->
+
+
 <!--*********************** EDIT ABOVE **********************************-->
 <!--Core Scripts-->
 
