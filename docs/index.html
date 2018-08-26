@@ -479,24 +479,33 @@
             the
             main mathematical tool used to solve the OCR problem in this project. In a probabilistic problem modeled by
             HMM,
-            there are some random variables which are sequentially dependent on each other, as Figure 4 shows. This
+            there are some random variables \(X_i\) which are sequentially dependent on each other, as Figure 4 shows.
+            This
             means
             that each of these variables is only dependent on its previous adjacent variable. The values of these random
-            variables are unknown and therefore these variables are called hidden state variables. Hidden variables can
+            variables are unknown and therefore these variables are called
+            <object class="text-italic">hidden state variables</object>
+            , Hidden variables can
             have
-            one of the possible discrete values or states , , …, . The probability is the probability that the hidden
-            variable has value and its previous adjacent variable has value . Such a probability is called the
+            one of the possible discrete values or states \(S_1, S_2 , …, S_n \). The probability \(P(X_i = S_k |
+            X_{(i-1)} = S_m)\) is the probability that the hidden
+            variable \(X_i\) has value \(S_k\) and its previous adjacent variable \(X_{i-1}\) has value \(X_m\). Such a
+            probability is called the
             Transition
-            Probability. Also there is another class of random variables , each of which corresponding to one hidden
-            variable, whose values are known and can be either discrete or continuous. They are called observation
-            variables
-            (shown in the lower part of Figure 4). The probability is the probability that the observation corresponds
-            to
-            the value of the hidden state . In the terminology of HMMs, this type of probability is called the Emission
-            Probability.</p>
+            Probability. Also there is another class of random variables \(O_i\), each of which corresponding to one
+            hidden
+            variable, whose values are known and can be either discrete or continuous. They are called
+            <object class="text-italic">observation
+                variables
+            </object>
+            (shown in the lower part of Figure 4). The probability \(P(O_i|X_i=S_k)\) is the probability that the
+            observation \(O_i\) corresponds
+            to \(S_k\) the value of the hidden state . In the terminology of HMMs, this type of probability is called
+            the Emission
+            Probability.
+        </p>
         <figure class="figure">
             <img src="img/Hidden markov.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="50%" height="50%"
                  alt="A diagram showing the dependency relations between variables in a Hidden Markov Model.">
             <figcaption class="figure-caption text-center">Figure 4 - A diagram showing the dependency relations between
                 variables in a Hidden Markov Model.
@@ -504,25 +513,28 @@
         </figure>
         <p class="lead para">According to the probability theory, if the values of all observation variables and all
             possible transition and emission probabilities are known, then the joint probability of occurrence of each
-            possible sequence of values for hidden state variables can be computed as follows:</p>
-        <figure class="figure">
-            <img src="img/Formula1.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="70%" height="70%"
-                 alt="Formula">
-        </figure>
+            possible sequence of values for hidden state variables can be computed as follows:
+            $$P(X_1,X_2,...,X_T,O_1,O_2,...,O_T)= P(X_1).P(O_T|X_T).\prod_{i=1}^{T-1} P(X_{i+1}|X_i).P(O_i|X_i) =$$
+            $$P(X_1).P(O_1|X_1).P(X_2|X_1).P(O_2|X_2)... .P(X_t)|X_{T-1}).P(O_T|X_T).$$
+
+        </p>
+
         <p class="lead para"> It is obvious that only the first hidden variable does not have any adjacent variable to
             its
-            left. Therefore, instead of a transition probability from its previous variable, its own probability is
+            left. Therefore, instead of a transition probability from its previous variable, its own probability
+            \(P(X_1)\) is
             multiplied in the formula. This probability is called the Initial Probability and is only computed for the
             initial hidden variable.</p>
         <p class="lead para">Now the same method can be used to model the character recognition problem. If a text line
             image is segmented
-            into number of character images, then the observations are these character images. The actual character
+            into \(T\) number of character images, then the observations are these character images. The actual
+            character
             classes
             corresponding to each of these observations are unknown, and thus the guesses about the identities of these
             observations are the hidden variables of the model. Transition probability is the probability of the
             adjacency
-            of two characters. Therefore, if we have number of character classes, an x matrix can hold all the
+            of two characters. Therefore, if we have \(N\) number of character classes, an \(NxN\) matrix can hold all
+            the
             transition
             probabilities between characters. The details of computing language model probabilities are explained in
             Section
@@ -537,11 +549,8 @@
             set
             of character classes can be computed using the formula
             above for all possible sequences of characters. Therefore, it is possible to find the best sequence of
-            characters which maximizes the probability <img src="img/Probability.png"
-                                                            class="figure-img img-fluid rounded center-block"
-                                                            data-html="true"
-                                                            width="25%" height="25%"
-                                                            alt="Probability"> This process of finding the best
+            characters which maximizes the probability \(P(X_1,X_2,...,X_T,O_1,O_2,...,O_T)\). This process of finding
+            the best
             character sequence for a line is
             performed in an algorithm called Viterbi. In this way, the Hidden Markov Models enable us to combine
             computer
@@ -600,7 +609,8 @@
                 used in this project
             </figcaption>
         </figure>
-        <p class="lead para">Removing these types of noises is not easy, mostly because removing them needs some intelligence about the
+        <p class="lead para">Removing these types of noises is not easy, mostly because removing them needs some
+            intelligence about the
             form
             and structure of characters. In most of OCR software, some types of statistical filters are applied to
             document
@@ -787,7 +797,11 @@
                     centroid from the border of the image in direction , the coordinates of the first pixel to be
                     analyzed
                     are
-                    computed as below:</p>
+                    computed as below:
+                    $$\lbrace_{p_y = c_y + (d.sin \theta)}^{p_x = c_x + (d.cos \theta)}$$</p>
+                <p class="lead para">Then by decrementing \(d\) one by one, we move toward the outer border of the
+                    character in the direction \(\theta\). Figure 8 shows the concept of centroid-to-boundary distances
+                    for a character.</p>
                 <figure class="figure">
                     <img src="img/Centroid.png" class="figure-img img-fluid rounded center-block" data-html="true"
                          width="12%" height="12%"
@@ -853,7 +867,6 @@
             to be used as input for the next stage of the training process (as explained in the next section).</p>
         <figure class="figure">
             <img src="img/mark_boundries.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="80%" height="80%"
                  alt="Mark boundries between characters">
             <figcaption class="figure-caption text-center">Figure 9 - The boundaries between characters are marked, for
                 the later automatic extraction of training characters
@@ -880,7 +893,7 @@
             each character class in the training process. The mean vector is simply the average of the feature vectors
             of the training characters, and thus its size is the same as the number of features used. The eigenvectors
             and eigenvalues matrices capture more complex statistical information about the features of the training
-            character images. If is the number of features, both of these matrices are of size x.</p>
+            character images. If \(D\) is the number of features, both of these matrices are of size \(DxD\)</p>
         <p class="lead para">The process of computing these parameters for all character classes is rather
             straightforward. For each class, its training character images are loaded, the features of each image are
             extracted, and the emission parameters for all the training images are computed. These computations are done
@@ -914,12 +927,58 @@
         <h3>7.3.1. Transition Probabilities</h3>
         <p class="lead para">Transition probability is a measure of the frequency of the adjacency of two characters in
             the language or the document under analysis. Therefore, the transition probability of two character classes
-            and can be computed by the following simple formula:</p>
-        <figure class="figure">
-            <img src="img/Formula 3.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="20%" height="20%"
-                 alt="Mark boundries between characters">
-        </figure>
+            \(C_1\) and \(C_2\) can be computed by the following simple formula:
+            $$P_t(C_1,C_2)=\frac{n(C_1,C_2)}{N(C_1)}$$
+        </p>
+
+        <p class="lead para">In this formula, \(n(C_1,C_2)\) is the number of times \(C_1\) is followed by \(C_2\), and
+            \(N(C_1)\) is the total number of
+            occurrences of \(C_1\) in the training text. For storing the transition probabilities, an \(MxM\) matrix is
+            used, where \(M\) is
+            the number of character classes. The training text file of the target document or book is read by the
+            software program, and for each pair of consecutive characters \(i\) and \(j\) in the text, the element
+            \([i,j]\) of the transition
+            matrix is incremented by one. Finally, the elements of each row of the matrix are divided by the total
+            number of occurrences of the character class corresponding to that row.</p>
+        <p class="lead para">One problem is that the adjacency of many pairs of characters may not have occurred in the
+            training text file, and thus their transition probability would be zero, which is a very strict and
+            inflexible decision. In order to smooth these transition probabilities, we use <i>Laplacian Smoothing</i> by
+            using
+            the smoothing parameter in the following way:
+            $$P_t(C_1,C_2)=\frac{n(C_1,C_2)+k}{N(C_1)+(k .M)}$$
+            where \(M\) is the number of character classes.</p>
+        <p class="lead para">where is the number of times that is first of word and its image is of length , and is the
+            number of different possible lengths. Because characters in the target text of this
+            document can appear in many different lengths (especially when considering combinatorial character classes
+            and the stretched forms of characters), it was decided to use a smaller number of length categories, each of
+            which covers 4 or 5 possible lengths. Therefore, if number of length categories is (which is 6 in our
+            project), now the initial probabilities are stored in an x matrix.</p>
+        <p class="lead para">With this new change in the definition of initial probability, now this probability is both
+            related to the language model and the properties of character images. This makes the process of computing
+            initial probabilities a little complex, because the character image corresponding to each first-of-word
+            character in the training text should be found in order to measure its width. Because of this complexity, we
+            decided to compute basic probabilities during the process of extracting character images from marked lines
+            (as explained in Section 7.1), as this process analyzes both the character images and the training text
+            file.</p>
+    </div>
+</section>
+<!--End section-->
+<!--Start section-->
+<a name="7.3.2. Initial Probabilities"></a>
+<section class=" text-left well well-sm">
+    <div class="container">
+        <h3>7.3.2. Initial Probabilities</h3>
+        <p class="lead para">As explained earlier in this paper, initial probability measures the frequency of the
+            occurrence of a character in the text. However, because this probability is only used for the first
+            character of the line, only when a character is at the beginning of a word it should be counted for the
+            computation of initial probabilities. If \(M\)is the number of character classes, a vector with size \(M\)
+            can hold the
+            initial probabilities for all characters. If \(f(C_1)\) is the number of times the character \(C_1\) is
+            located at the
+            beginning of a word, the initial probability for \C(C_1\) can be computed by this simple formula:
+            $$P_i(C_1) = \frac{f(C_1)}{N(C_1)}$$
+        </p>
+
         <p class="lead para">As we will see in Section 8, the length (i.e. width) of a character image is an effective
             parameter in gHMM for determining the way text line is segmented. In this regard, the length chosen for the
             first character of the line in the segmentation is very important, because Viterbi algorithm starts
@@ -928,12 +987,24 @@
             their most likely length when they are located at the beginning of the line in the target document of this
             project. We can take advantage of these facts and compute the initial probabilities based on the length of
             the character images. If we enter the length parameter to the formula above, the initial probability of the
-            character if its length is can be computed as below:</p>
-        <figure class="figure">
-            <img src="img/Formula 4.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="30%" height="30%"
-                 alt="Mark boundries between characters">
-        </figure>
+            character \(C_1\) if its length is \(l\) can be computed as below:
+            $$P_i(C_1,l)=\frac{f(C_1,l)+k}{N(C_1)+(k .L)}$$
+            where \(f(C_1,l)\) is the number of times that \C(C_1\) is first of word and its image is of length \(l\),
+            and \(L\)is the number of
+            different possible lengths. Because characters in the target text of this document can appear in many
+            different lengths (especially when considering combinatorial character classes and the stretched forms of
+            characters), it was decided to use a smaller number of length categories, each of which covers 4 or 5
+            possible lengths. Therefore, if number of length categories is \(L\) (which is 6 in our project), now the
+            initial
+            probabilities are stored in an \(MxL\) matrix.
+        </p>
+        <p class="lead para">One problem is that the adjacency of many pairs of characters may not have occurred in the
+            training text file, and thus their transition probability would be zero, which is a very strict and
+            inflexible decision. In order to smooth these transition probabilities, we use <i>Laplacian Smoothing</i> by
+            using
+            the smoothing parameter in the following way:
+            $$P_t(C_1,C_2)=\frac{n(C_1,C_2)+k}{N(C_1)+(k .M)}$$
+            where \(M\) is the number of character classes.</p>
         <p class="lead para">where is the number of times that is first of word and its image is of length , and is the
             number of different possible lengths. Because characters in the target text of this
             document can appear in many different lengths (especially when considering combinatorial character classes
@@ -979,7 +1050,8 @@
             the result of the distance function is somehow proportional to the negative of the emission
             probability. While it is desired that emission probability is maximized, smaller distance values show higher
             similarity between the image and the model of the character.</p>
-        <p class="lead para">The simplest of the distance functions is the Euclidean distance, which simply computes the
+        <p class="lead para">The simplest of the distance functions is the <i>Euclidean distance</i>, which simply
+            computes the
             sum of the squared differences of the features of the new character image and the mean vector of the
             character class. This type of distance functions ignores the variances of the features and the relationship
             of different features with each other. A more accurate distance function should address the difference in
@@ -989,51 +1061,39 @@
             which can capture these complexities. Covariance matrix not only includes the variances of the values of
             each feature, but also covers the way different features vary with relation to each other. The Mahalanobis
             distance function is one which takes advantage of the covariance matrix for achieving higher accuracy. The
-            formula of this distance function is as follows:</p>
-
-        <figure class="figure">
-            <img src="img/Distance.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="40%" height="40%"
-                 alt="Formula">
-        </figure>
-
-        <p class="lead para">where is the inverse of the covariance matrix of the character class, is the mean vector of
-            the character class, and is the feature vector of the new character image. If denotes the number of
-            features, the covariance matrix is of size x. The diagonal elements of the covariance matrix reflect the
-            variances of the values of each feature, while other elements represent the covariance of the features with
-            relation to each other. It is interesting that the Mahalanobis distance can be derived from the negative
-            logarithm of the emission probability computed by the multivariate Gaussian distribution, as the formula of
-            this distribution suggests:</p>
-        <figure class="figure">
-            <img src="img/Gaussian.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="60%" height="60%"
-                 alt="Formula">
-        </figure>
+            formula of this distance function is as follows:
+            $$Distance = \sqrt{(x-\mu)^T{\sum^{-1}}(x - \mu)}$$
+            where \(\sum^{-1}\) is the inverse of the covariance matrix of the character class \(\mu\), is the mean
+            vector of the character
+            class \(x\), and is the feature vector of the new character image. If \(D\) denotes the number of features,
+            the
+            covariance matrix is of size \(DxD\). The diagonal elements of the covariance matrix reflect the variances
+            of the
+            values of each feature, while other elements represent the covariance of the features with relation to each
+            other. It is interesting that the Mahalanobis distance can be derived from the negative logarithm of the
+            emission probability computed by the multivariate Gaussian distribution, as the formula of this distribution
+            suggests:
+            $$P(x|C_i)=(2\pi)^{-\frac{D}{2}}.|\Sigma_i|^{-\frac{1}{2}}.exp(-\frac{(x-\mu)^T\Sigma^{-1}_{i}(x-\mu)}{2})$$
+        </p>
 
         <p class="lead para">One common problem that may occur when computing the Mahalanobis distance (or the related
             probability computed by the Gaussian distribution) is that the covariance matrix is not always invertible;
             it occurs when the determinant of the covariance matrix is zero or is a very small value. In order to solve
             this problem, one way is to replace the inverse of the covariance matrix with the equivalent
             eigendecomposition matrices [5]. For a symmetric square matrix like the covariance matrix, the following
-            equation holds:</p>
-
-        <figure class="figure">
-            <img src="img/BVB.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="15%" height="15%"
-                 alt="Formula">
-        </figure>
-
+            equation holds:
+            $$\Sigma = B \Lambda B^{-1}$$
+            The whole term on the right side of this equation is called the Eigendecomposition of the matrix . And then
+            by taking the inverse from both sides, the following equation can be derived:
+            $$\Sigma^{-1} = B \Lambda^{-1} B^{-1}$$
+        </p>
         <p class="lead para">The whole term on the right side of this equation is called the Eigendecomposition of the
-            matrix . And then by taking the inverse from both sides, the following equation can be derived:</p>
+            matrix \(\Sigma\). And then by taking the inverse from both sides, the following equation can be derived:
+            $$\Sigma^{-1} = B\Lambda^{-1}B^{-1}$$
+        </p>
 
-        <figure class="figure">
-            <img src="img/Sigma.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="20%" height="20%"
-                 alt="Formula">
-        </figure>
-
-        <p class="lead para">In this equation, is a x symmetric matrix (e.g. covariance matrix), is the x eigenvectors
-            matrix, and is the x diagonal eigenvalues matrix. The th element on the diagonal of the eigenvalues matrix
+        <p class="lead para">In this equation, \(\Sigma\) is a \(DxD\) symmetric matrix (e.g. covariance matrix), \(B\) is the \(DxD\) eigenvectors
+            matrix, and \(\Lambda\) is the \(DxD\) diagonal eigenvalues matrix. The \(ith\) element on the diagonal of the eigenvalues matrix
             corresponds to the th row of the eigenvectors matrix (i.e. the th eigenvector). The eigendecomposition
             matrices include the directions in which the data has the highest variance, and these new directions are
             sorted in decreasing order by their power. Therefore, the more powerful and important directions of data are
