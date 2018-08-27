@@ -10,9 +10,11 @@
 | Developer         |     @name3@organization.com    |
 | QA                |     @name1@organization.org    |
 
-# Goal
+# Goals
 
 * This project is a thesis submitted to BIHE for the degree of B.S. in the faculty of Computer Engineering
+* Make the thesis available online to all
+* Make the code open source under the Apache 2.0 license
 
 # Background and Strategic fit
 
@@ -25,15 +27,13 @@ in a specific Persian font, which was mostly used in older Persian documents and
 
 # Assumptions
 
-* C++ implementation
-* YAML 1.0
 
 # Requirements
 
-|   |     Title               |   User Story                  |   Importance           |      Notes               |
+|   |     Title               |   Story                  |   Importance           |      Notes               |
 | - | ----------------------- | ----------------------------- | ---------------------- | ------------------------ |
-| 1 | My BIHE project | I want my work to be of benefit to others | Must have           |            |
-| 2 | Project website            | I want others to have access to my work so they can build upon it                  | Must have           |              |
+| 1 | Thesis  | Make thesis available to others online | Must have           |            |
+| 2 | Source code            | Make the source code open source                  | Must have           |              |
 
 # User Integration Design
 
