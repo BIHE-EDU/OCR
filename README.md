@@ -2,8 +2,8 @@
 
 |      Title        |   User Story                  |
 | ------------------| ----------------------------- |
-| Version           |                               |
-| Document Status   |     `DRAFT`                   |
+| Version           |     1.0                          |
+| Document Status   |     `Final`                   |
 | Document Owner    |     @name1@organization.com    |
 | Related Issues    |                               |
 | Designer          |     @name2@organization.org    |
@@ -12,15 +12,21 @@
 
 # Goal
 
-* This project is a (masters thesis | undergraduate final project, | undergraduate minor project | associate degree project )
+* This project is a thesis submitted to BIHE for the degree of B.S. in the faculty of Computer Engineering
 
 # Background and Strategic fit
 
-This demonstrates ......
+Recognition of the text in scanned documents of older Persian writings is a challenging task, because of 
+the properties of such scripts and the cursive property of Persian writings in general. As separate 
+segmentation of Persian characters is much more difficult than in Latin and some other alphabets, 
+using segmentation-free approaches are more useful in Persian OCR. In this project, one of such methods 
+called the Generalized Hidden Markov Models (or gHMM) is used for the recognition of texts written 
+in a specific Persian font, which was mostly used in older Persian documents and books.
 
 # Assumptions
 
-* ...
+* C++ implementation
+* YAML 1.0
 
 # Requirements
 
@@ -28,12 +34,9 @@ This demonstrates ......
 | - | ----------------------- | ----------------------------- | ---------------------- | ------------------------ |
 | 1 | My BIHE project | I want my work to be of benefit to others | Must have           |            |
 | 2 | Project website            | I want others to have access to my work so they can build upon it                  | Must have           |              |
-| 3 | For references            | I want to reference my work in my resume                  | Must have           |              |
 
 # User Integration Design
 
-The following icon will be used as the favicon that will appear on each browser page tab associate with my project
-![favicon design](/design_images/favicon.png) Format: [png]
 
 # Questions
 
