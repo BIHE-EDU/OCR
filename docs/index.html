@@ -792,14 +792,14 @@
                     that
                     direction, and then check the pixels toward the centroid point to see where is the first black pixel
                     (which
-                    would be the outmost black pixel of the character itself in the direction ). If d is the distance of
+                    would be the outmost black pixel of the character itself in the direction \(\theta\)). If d is the distance of
                     the
-                    centroid from the border of the image in direction , the coordinates of the first pixel to be
+                    centroid from the border of the image in direction \(\theta\), the coordinates of the first pixel to be
                     analyzed
                     are
                     computed as below:
-                    $$\lbrace_{p_y = c_y + (d.sin \theta)}^{p_x = c_x + (d.cos \theta)}$$</p>
-                <p class="lead para">Then by decrementing \(d\) one by one, we move toward the outer border of the
+                    $$\biggl\lbrace_{p_y = c_y + (d.sin \theta)}^{p_x = c_x + (d.cos \theta)}$$
+                    Then by decrementing \(d\) one by one, we move toward the outer border of the
                     character in the direction \(\theta\). Figure 8 shows the concept of centroid-to-boundary distances
                     for a character.</p>
                 <figure class="figure">
@@ -975,7 +975,7 @@
             can hold the
             initial probabilities for all characters. If \(f(C_1)\) is the number of times the character \(C_1\) is
             located at the
-            beginning of a word, the initial probability for \C(C_1\) can be computed by this simple formula:
+            beginning of a word, the initial probability for \(C_1\) can be computed by this simple formula:
             $$P_i(C_1) = \frac{f(C_1)}{N(C_1)}$$
         </p>
 
@@ -1119,28 +1119,18 @@
         </ul>
 
         <p class="lead para">As a result of replacing the covariance matrix by the eigendecomposition term, the emission
-            probability computed by the Gaussian distribution can be computed this way:</p>
-
-        <figure class="figure">
-            <img src="img/Gaussian_distribution.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="50%" height="50%"
-                 alt="Formula">
-        </figure>
+            probability computed by the Gaussian distribution can be computed this way:
+            $$P(x|C_i) = (2 \pi )^{-\frac{D}{2}}.|\Lambda|^{-\frac{1}{2}}.exp(-\frac{(x-\mu)^TB\Lambda^{-1}B^{T}(x-\mu)}{2})$$
+        </p>
 
         <p class="lead para">However, for the emission probability it is preferred to use the distance form. Because in
             the Gaussian distribution, several values (most of them very small) are multiplied by each other, sometimes
             the values of emission probabilities may underflow. Therefore, we can add up the negative logarithm of the
             constituent terms of the Gaussian distribution in order to avoid underflow. The result can be called the
             emission distance, and this new form of the function is called Modified Quadratic Distance Function (or
-            MQDF):</p>
-
-        <figure class="figure">
-            <img src="img/MQDF.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="60%" height="60%"
-                 alt="Formula">
-        </figure>
-
-        <p class="lead para">where is the emission distance and is the th eigenvalue. Note that the determinant of the
+            MQDF):
+            $$D_E= - \log P(x|C_i) = \frac{D}{2}(log 2\pi)+\frac{1}{2}\Biggl(\sum^{D}_{j=1}\log \lambda_j \Biggl)+\frac{1}{2}((x-\mu)^{T}(B\Lambda^{-1}B^{T})(x-\mu))$$
+            where \(D_{E}\) is the emission distance and \(\lambda_j\) is the \(jth\) eigenvalue. Note that the determinant of the
             covariance matrix can also be computed as the addition of the logarithms of the eigenvalues. As we will see
             in Section 8.3, also when computing the total probability of a
             character sequence in the Viterbi algorithm, negative logarithm of the probabilities are added instead of
@@ -1170,13 +1160,13 @@
             </figcaption>
         </figure>
         <p class="lead para">In order to solve this problem, the general solution is to replace minor eigenvalues of
-            different classes with a constant small value [5]. Because eigenvalues are sorted decreasingly based on the
-            importance and power, this replacement solution means replacing the eigenvalues from the th element toward
-            the end of the eigenvalues matrix. This general solution is called eigenvalues smoothing.</p>
+            different classes with a constant small value \(\delta\)[5]. Because eigenvalues are sorted decreasingly based on the
+            importance and power, this replacement solution means replacing the eigenvalues from the \(kth\) element toward
+            the end of the eigenvalues matrix. This general solution is called <i>eigenvalues smoothing</i>.</p>
 
         <p class="lead para">In order to implement the eigenvalues smoothing, one method we tested was to replace the
-            eigenvalues which are smaller than a threshold in all the classes. In this way, in different classes
-            different number of eigenvalues are replaced by . The initial recognition results of using this method were
+            eigenvalues which are smaller than a threshold \(\alpha\) in all the classes. In this way, in different classes
+            different number of eigenvalues are replaced by \(\delta\). The initial recognition results of using this method were
             not satisfying. The problem is different number of minor (i.e. very
             small) eigenvalues in different classes. The tests showed that stronger character classes (i.e. those with
             larger number of training examples) usually have less minor eigenvalues that should be replaced than weaker
@@ -1184,25 +1174,25 @@
             variances when a wider range of training examples are available for a class. In some of the classes with a
             very few number of training examples, nearly all of the eigenvalues should be replaced. Because of this
             fact, there will be a huge divide between the values of the determinant in weak classes and strong classes.
-            In weaker classes, a higher power of the replacement value will constitute the determinant and this leads to
+            In weaker classes, a higher power of the replacement value \(\delta\) will constitute the determinant and this leads to
             a much lower determinant in comparison with the determinant of the stronger classes. The lower determinant
             abnormally increases the emission probabilities of weaker classes and unfairly increases the possibility of
             choosing such classes by the Viterbi algorithm in the recognition process.</p>
         <p class="lead para">An ideal solution for the challenge of smoothing eigenvalues is to use different thresholds
-            and replacement
-            values for different classes. However, these suitable values of and can just be computed by performing a
-            large number of cross-validation tests (for different possible values of and for different classes) which
-            seems not feasible. Therefore, at least some of these smoothing parameters (i.e. the threshold , the
-            starting index , or the replacement value ) should be set the same for all classes.</p>
-        <p class="lead para">The method we finally used successfully is to make the value of and the same for all
+            \(\alpha\) and replacement
+            values \(\delta\) for different classes. However, these suitable values of \(\alpha\) and \(\delta\) can just be computed by performing a
+            large number of cross-validation tests (for different possible values of \(\alpha\) and \(\delta\) for different classes) which
+            seems not feasible. Therefore, at least some of these smoothing parameters (i.e. the threshold \(\alpha\), the
+            starting index \(k\), or the replacement value \(\delta\)) should be set the same for all classes.</p>
+        <p class="lead para">The method we finally used successfully is to make the value of \(k\) and \(\delta\) the same for all
             character classes. This
             method ensures more stability than the previous method used, because the eigenvalues of all the classes are
             smoothed from the same index toward the end of the matrix. Despite this advantage, for the classes which the
-            number of their meaningful eigenvalues (i.e. large enough eigenvalues) is lower than the index , the
+            number of their meaningful eigenvalues (i.e. large enough eigenvalues) is lower than the index \(k\), the
             decreasing order of the eigenvalues may become disorganized. Therefore, for the eigenvalues of some classes,
-            from where in the matrix that eigenvalue is lower than to the element should also be replaced so that the
+            from where in the matrix that eigenvalue is lower than \(\delta\) to the element \(k\) should also be replaced so that the
             decreasing order of eigenvalues is kept intact. In Figure 11 below, the first segment of the eigenvalues
-            matrix of the class isolated SEH (ث) is shown after replacing minor eigenvalues when and . Although is 10,
+            matrix of the class isolated SEH (ث) is shown after replacing minor eigenvalues when \(k = 10\) and \(\delta = 0.001\). Although \(k\)is 10,
             only the first five eigenvalues remain intact in order to keep the decreasing order.</p>
         <figure class="figure">
             <img src="img/Eigenvalues1.png" class="figure-img img-fluid rounded center-block" data-html="true"
@@ -1212,12 +1202,12 @@
                 isolated SEH, when k=10 and delta=0.001
             </figcaption>
         </figure>
-        <p class="lead para">TThe suitable value for and should be determined by cross validation tests. Our tests show
+        <p class="lead para">The suitable value for \(k\) and \(\delta\) should be determined by cross validation tests. Our tests show
             that when there is some number of classes with very few training examples and thus a few numbers of
-            meaningful eigenvalues, smaller values for are more suitable. Small values for mean that many of the
-            meaningful eigenvalues in stronger classes should be replaced by the constant . As a result, the recognition
+            meaningful eigenvalues, smaller values for \(k\) are more suitable. Small values for \(k\) mean that many of the
+            meaningful eigenvalues in stronger classes should be replaced by the constant \(\delta\). As a result, the recognition
             power of the model of stronger classes may decrease to some level. However, when all of the classes have an
-            adequate minimum of training examples, then larger values for can be chosen, and most of the meaningful
+            adequate minimum of training examples, then larger values for \(k\) can be chosen, and most of the meaningful
             eigenvalues in different classes will remain intact. This usually results in forming better emission models
             for character classes.</p>
     </div>
@@ -1247,12 +1237,12 @@
             generalized Viterbi algorithm, no set of segmented character images are available, therefore the outer loop
             should iterate over different possible segmentations. Neither the number of the
             characters of the line nor the position and length of each character are known. In order to parameterize a
-            character image in a segmentation state, two variables and are used. is the length (i.e. width) of each
-            character, while is the ending position of the character in the line image. By iterating over all possible
-            values of and , all the possible character images in different segmentation states are covered. Therefore,
+            character image in a segmentation state, two variables \(l\) and \(t\) are used. is the length (i.e. width) of each
+            character, while \(t\) is the ending position of the character in the line image. By iterating over all possible
+            values of \(t\) and \(l\), all the possible character images in different segmentation states are covered. Therefore,
             in the generalized Viterbi, two other variables are also changed in addition to the character class, and
             this forms three nested loops in the body of the Viterbi algorithm. While the minimum and maximum values of
-            the variable depend on the width of the text line image, the minimum and maximum values of are determined
+            the variable \(t\) depend on the width of the text line image, the minimum and maximum values of \(l\) are determined
             based on the minimum and maximum possible lengths of a character image (which can be decided based on the
             training character images). Figure 12 shows the way the implemented generalized Viterbi algorithm has
             segmented an input line, and the best character sequence recognized by the algorithm.</p>
@@ -1268,12 +1258,12 @@
             maximum joint
             probability (or with minimum total distance). For this purpose, in the iterative implementation of the
             generalized Viterbi algorithm, two main three-dimensional tables are used to store the important information
-            needed: the probabilities (or distances) table and the paths table. Each element in the probabilities table
-            should store the joint probability of the best character sequence which is finished in position of the line
-            image, and the final character of this sequence is the character with length . Also each element in the
+            needed: the probabilities (or distances) table and the paths table. Each element \(D[t][l][c]\) in the probabilities table
+            should store the joint probability of the best character sequence which is finished in position \(t\) of the line
+            image, and the final character \(c\) of this sequence is the character with length \(l\). Also each element \(P[t][l][c]\) in the
             paths
             table stores the information of the previous character in the best character sequence which is finished in
-            position with character as the last character of the sequence and as its
+            position \(t\) with character \(c\) as the last character of the sequence and \(l\) as its
             length. The paths table is mainly used at the end of the Viterbi algorithm in order to rebuild the best
             character sequence corresponding to the entire line. By starting from the first elements of the
             probabilities
@@ -1282,33 +1272,26 @@
             iterative Viterbi algorithm finds the best character sequence.</p>
         <p class="lead para">In the first step, the probabilities of all the possible first characters of the line are
             computed and stored in
-            the probabilities table. It means for each possible length which is equal to (meaning it is the first
+            the probabilities table. It means for each possible length \(l\) which is equal to \(t\) (meaning it is the first
             character
             of the line) and for each character class , the following probability is computed and stored in the
-            probabilities table:</p>
-        <figure class="figure">
-            <img src="img/probablities table.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="25%" height="25%"
-                 alt="Formula">
-        </figure>
-        <p class="lead para">Iwhere is the initial probability of character with length , and is the emission
-            probability for the similarity between character and the character image with length ending in position of
+            probabilities table:
+            $$D[t][l][c] = \pi(c,l).e(c,l,t)$$
+            where \(\pi(c,l)\) is the initial probability of character \(c\) with length \(l\), and is the emission
+            probability for the similarity between character \(c\) and the character image with length \(l\) ending in position \(t\) of
             the line image. Note that actually the length category is important in initial probability rather than the
             length itself.</p>
-        <p class="lead para">After this first initialization step, is incremented one by one in the outer loop and the
+        <p class="lead para">After this first \(t\) initialization step, is incremented one by one in the outer loop and the
             following
-            computations are done for different possible lengths (those which are not equal to ) and different character
-            classes:</p>
-        <figure class="figure">
-            <img src="img/character classes.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="40%" height="40%"
-                 alt="Formula">
-        </figure>
-        <p class="lead para">is the transition probability between the characters and . Note that contains the best
+            computations are done for different possible lengths (those which are not equal to \(t\)) and different character
+            classes:
+            $$D[t][l][c] = e(c,l,t).max_{b.k}(D[t-l][k][b]/t(b,c))$$
+            $$P[t][l][c] = argmax_{b,k}(D[t-l][k][b].t(b,c))$$
+            \(t(b,c)\) is the transition probability between the characters \(b\) and \(c\). Note that \(D[t-l][k][b]\) contains the best
             probability for the
-            character with length before the current character. When at the end of the Viterbi algorithm, the
+            character \(b\) with length \(k\) before the current character. When at the end of the Viterbi algorithm, the
             probabilities
-            for the highest possible position (which is the ending position of the line image) are computed and stored,
+            for the highest possible position \(t\) (which is the ending position of the line image) are computed and stored,
             the
             best character sequence (and the corresponding segmentation scheme) can be retrieved by going back in the
             paths
@@ -1320,13 +1303,11 @@
             values, it is better to use distances instead of probabilities in the Viterbi algorithm. As a result, the
             character sequence with minimum total distance should be chosen as the best one. In order to use distances
             instead of probabilities, the negative logarithms of the probabilities are used and the formulas above are
-            modified in the following way:</p>
-        <figure class="figure">
-            <img src="img/negative logarithms.png" class="figure-img img-fluid rounded center-block" data-html="true"
-                 width="60%" height="60%"
-                 alt="Formula">
-        </figure>
-        <p class="lead para">In these new formulas, is the emission distance (i.e. the distance form of the emission
+            modified in the following way:
+            $$\Biggl\lbrace^{(t = l):\qquad D[t][l][c] = -\log(\pi(c,l))+e_L(c,l,t)}_{(t \ne l): \qquad D[t][l][c] = e_L(c,l,t)+min_{b,k}D[t-l][k][b]-\log(t(b,c))}$$
+
+        </p>
+        <p class="lead para">In these new formulas, \(e_L(c,l,t)\) is the emission distance (i.e. the distance form of the emission
             probability) and is
             computed by the MQDF introduced in Section 8.1.</p>
 
@@ -1342,7 +1323,7 @@
         <p class="lead para">The generalized Viterbi algorithm is much slower than the classic version of Viterbi,
             especially because of iterating over all possible segmentations. One way to normalize its performance is to
             assume that the unit of length is more than one pixel (e.g. three or four pixels). Each of these units is
-            called a block. In this way, far less number of iterations would be used in the algorithm for changing
+            called a <i>block</i>. In this way, far less number of iterations would be used in the algorithm for changing
             length values, though the accuracy of the algorithm would also be affected (as we will see in Section 10).
             In our project, a character image can have a minimum length of 4 and a maximum length of 40 pixels.
             Therefore if a block length of 3 is used, the length of each character image can be at least equal to one
@@ -1350,19 +1331,19 @@
             as dividing the line image into maximum possible number of blocks, and then analyzing all the possible ways
             that series of adjacent blocks can join each other to form character images.</p>
         <p class="lead para">Another bottleneck in the performance of the generalized Viterbi algorithm is the fact that
-            (i.e. the emission distance of a specific character image and a character class) may be repeated many times
-            during the algorithm, because the character image ending in position with length is present in many
+            \(e_L(c,l,t)\) (i.e. the emission distance of a specific character image and a character class) may be repeated many times
+            during the algorithm, because the character image ending in position \(t\) with length \(l\) is present in many
             different segmentation schemes. The total time used for computing emission distances constitutes a large
             part of the total execution time of the Viterbi algorithm, because each of the emission distance
             computations includes both extracting features and computing several number of matrix multiplications.
             Therefore, another way to improve performance is to store the emission distances the first time they are
             computed, and in the next times read the previously stored values instead of recomputing the same emission
             distances. This can be achieved by using another three-dimensional table for emission distances. The element
-            stores the emission distance of the character class and the character image starting from position toward
-            the position in the line image.</p>
+            \(E[t][l][c]\) stores the emission distance of the character class and the character image starting from position \(t-l\) toward
+            the position \(t\) in the line image.</p>
         <p class="lead para">We still can have more performance optimizations through the emission distances, by paying
             attention to those computations in the MQDF that are not dependent on the character image under analysis. In
-            this regard, the eigendecomposition term (i.e. the term ) is only dependent on the character class and can
+            this regard, the eigendecomposition term (i.e. the term \(B\Lambda^{-1}B^{-1}\)) is only dependent on the character class and can
             be computed from the eigenvalues and eigenvectors matrices of the class (which were prepared during the
             training process). Also this computation is a time-consuming task, because it involves two multiplications
             between three square matrices. Therefore, computation of the eigendecomposition term in the distance
@@ -1399,7 +1380,7 @@
         <h3>10.1. Initial Tests and Results</h3>
         <p class="lead para">For testing the OCR program implemented, firstly the training program should be executed in
             order to prepare the language model probabilities and the emission parameters needed in the character
-            recognition process. The training text used is the holy Baha’i book ‘Maede-ye-Asemani’, the 5th volume. The
+            recognition process. The training text used is the holy Baha’i book <i>‘Maede-ye-Asemani’</i>, the 5th volume. The
             scanned version of the book was available, but the appropriate text version was not available, and therefore
             the needed pages of the book were typed (because of the considerations explained in Section 7). About 25
             pages of the text were used for the training process. This may not be enough for having strong language
@@ -1421,7 +1402,7 @@
             were changed during these tests, from the index and the replacement value in eigenvalues smoothing, to the
             parameters related to feature types and regions. Three other pages of the training text were used (both
             scanned images of the text and the typed text version) for the cross-validation tests.</p>
-        <p class="lead para">TIn the tests, in order to estimate the accuracy of the results, the character recognitions
+        <p class="lead para">In the tests, in order to estimate the accuracy of the results, the character recognitions
             of the program should be finally compared with the ground truth (that is, the typed text version of the test
             pages). This evaluation should be done for each text line, and finally the results of all the text lines can
             be aggregated. One measure suitable for comparing character sequences is the Levenshtein Distance. This
@@ -1476,13 +1457,9 @@
             categories, the same as the categories used for initial probabilities.</p>
         <p class="lead para">Length probabilities are entered to the total distance formula of the Viterbi algorithm,
             with a similar role to the emission distances and the language model probabilities. If the length
-            probability of a character image is denoted by , the formula is changed in the following way:</p>
-        <figure class="figure">
-            <img src="img/probability of character.png" class="figure-img img-fluid rounded center-block"
-                 data-html="true"
-                 width="80%" height="80%"
-                 alt="Formula">
-        </figure>
+            probability of a character image is denoted by \(w(c,l,t)\), the formula is changed in the following way:
+            $$D[t][l][c] = e_L(c,l,t) - \log(w(c,l,t))+min_{b,k}(D[t-l][k][b]-log(t(b,c)))$$
+        </p>
     </div>
 </section>
 <!--End section-->
@@ -1497,17 +1474,13 @@
             output negative values. However, we guessed that these negative values may be sources of some instability in
             the results. Also we found that some part of the emission distance formula includes a fixed large negative
             value which is the same for all the character classes in the current implementation, and thus can be removed
-            from the MQDF. One part of this fixed value is , which is only dependent on the number of features. Another
+            from the MQDF. One part of this fixed value is \(\frac{D}{2}\log 2\pi)\), which is only dependent on the number of features. Another
             part is the part of the determinant term which is calculated from the minor eigenvalues (that is,
-            eigenvalues from to the end of the matrix). This fixed part of the determinant can be mathematically showed
-            as and in practice is equal to , which is a large negative value. Therefore, removing these two terms (shown
-            below) can make all the emission distance values positive:</p>
-        <figure class="figure">
-            <img src="img/emission distance.png" class="figure-img img-fluid rounded center-block"
-                 data-html="true"
-                 width="30%" height="30%"
-                 alt="Formula">
-        </figure>
+            eigenvalues from \(k\) to the end of the matrix). This fixed part of the determinant can be mathematically showed
+            as \(\frac{1}{2}\sum^{D}_{j=k}\log \lambda_j\) and in practice is equal to \(\frac{D-k}{2}(\log \delta)\), which is a large negative value. Therefore, removing these two terms (shown
+            below) can make all the emission distance values positive:
+            $$\frac{D}{2}(\log 2\pi)+\frac{D-k}{2}(\log \delta)$$
+        </p>
     </div>
 </section>
 <!--End section-->
@@ -1546,26 +1519,17 @@
             computed by dividing the total distance by the number of characters in the sequence.</p>
         <p class="lead para">In order to use average distances in comparisons, the number of characters of each
             character sequence should be known at each moment. A new three-dimensional table (e.g. called sequence
-            lengths table) can be used to store the number of characters of the best sequences. The element of this new
-            table stores the number of characters in the best sequence that ends at position with a final character
-            image of length and recognized as character . Now at each stage of the Viterbi algorithm, the best previous
-            character can be determined by:</p>
-        <figure>
-            <img src="img/argmin.png" class="figure-img img-fluid rounded center-block"
-                 data-html="true"
-                 width="30%" height="30%"
-                 alt="Formula">
-        </figure>
-        <p class="lead para">Where is the current character and is its length, and are respectively the class and the
-            length of the previous character (which should be determined). Also when the best and are determined, the
-            number of characters of the best sequence ending with is stored in the appropriate element of the sequence
-            lengths table:</p>
-        <figure>
-            <img src="img/sequence.png" class="figure-img img-fluid rounded center-block"
-                 data-html="true"
-                 width="30%" height="30%"
-                 alt="Formula">
-        </figure>
+            lengths table) can be used to store the number of characters of the best sequences. The element \(S[t][l][c]\) of this new
+            table stores the number of characters in the best sequence that ends at position \(t\) with a final character
+            image of length \(l\) and recognized as character \(c\). Now at each stage of the Viterbi algorithm, the best previous
+            character can be determined by:
+            $$argmin_{b,k}(\frac{D[t-l][k][b] - log(t(b,c))}{S[t-1][k][b]+1})$$
+            Where \(c\) is the current character and \(l\) is its length, \(b\) and \(k\) are respectively the class and the
+            length of the previous character (which should be determined). Also when the best \(b\) and \(k\)are determined, the
+            number of characters of the best sequence ending with \(c\) is stored in the appropriate element of the sequence
+            lengths table:
+            $$S[t][l][c] = S[t-l][k][b] + 1$$
+        </p>
     </div>
 </section>
 <!--End section-->
