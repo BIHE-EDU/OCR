@@ -33,6 +33,7 @@ in a specific Persian font, which was mostly used in older Persian documents and
 | - | ----------------------- | ----------------------------- | ---------------------- | ------------------------ |
 | 1 | Thesis  | Make thesis available to others online | Must have           |            |
 | 2 | Source code            | Make the source code open source                  | Must have           |              |
+| 3 | Running the code           | Make the others can easily download and run the source code                  | Must have           |              |
 
 # Software
 
